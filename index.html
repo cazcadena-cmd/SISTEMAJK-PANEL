@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel de Comercios — Sistema JK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; min-height: 100vh; color: #e9f8f6; background: radial-gradient(circle at top left, #12353a 0%, #0d1117 40%, #090b10 100%); padding: 24px; }
+.admin-container { width: 100%; max-width: 1400px; margin: 0 auto; }
+.admin-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.admin-brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.admin-logo { width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #12d8c4, #22f5dd); color: #081014; font-size: 18px; font-weight: 700; letter-spacing: .04em; flex-shrink: 0; box-shadow: 0 0 24px rgba(18,216,196,.3); }
+.admin-brand h2 { font-size: 22px; font-weight: 600; color: #ffffff; letter-spacing: .02em; }
+.admin-brand span { color: #7b9c99; font-size: 12px; }
+.admin-btn { height: 46px; padding: 0 18px; border-radius: 12px; border: 1px solid rgba(18,216,196,.35); background: rgba(18,216,196,.10); color: #12d8c4; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: .2s; }
+.admin-btn:hover { background: rgba(18,216,196,.22); }
+.admin-btn:disabled { opacity: .6; cursor: not-allowed; }
+.admin-warn { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,184,76,.35); background: rgba(255,184,76,.08); color: #ffcf7d; font-size: 12px; line-height: 1.5; margin-bottom: 18px; }
+.admin-warn i { color: #ffb84d; font-size: 15px; flex-shrink: 0; }
+.admin-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.admin-kpi { padding: 16px 18px; border-radius: 16px; background: #171a21; border: 1px solid rgba(18,216,196,.14); display: flex; flex-direction: column; gap: 4px; }
+.admin-kpi span { color: #7b9c99; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+.admin-kpi strong { color: #fff; font-size: 24px; font-weight: 700; font-family: 'Poppins', sans-serif; }
+.admin-kpi small { color: #596170; font-size: 10px; }
+.admin-kpi.k-blocked { border-color: rgba(255,94,94,.3); }
+.admin-kpi.k-blocked strong { color: #ff8d8d; }
+.admin-kpi.k-active { border-color: rgba(34,197,94,.25); }
+.admin-kpi.k-active strong { color: #34d399; }
+.admin-toolbar { margin-bottom: 16px; }
+.admin-search { position: relative; display: block; }
+.admin-search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #12d8c4; font-size: 14px; }
+.admin-search input { width: 100%; height: 50px; border: 1px solid rgba(18,216,196,.2); outline: none; border-radius: 13px; background: #171a21; color: #fff; padding: 0 16px 0 46px; font-family: 'Poppins', sans-serif; font-size: 14px; transition: .2s; }
+.admin-search input:focus { border-color: #12d8c4; box-shadow: 0 0 14px rgba(18,216,196,.12); }
+.admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+.admin-card { background: #171a21; border: 1px solid rgba(18,216,196,.14); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px; transition: border-color .25s, transform .25s; }
+.admin-card:hover { border-color: rgba(18,216,196,.35); transform: translateY(-2px); }
+.admin-card-head { display: flex; align-items: center; gap: 14px; }
+.admin-logo { width: 62px; height: 62px; border-radius: 14px; background: #101319; border: 1px solid rgba(18,216,196,.2); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.admin-logo img { width: 100%; height: 100%; object-fit: contain; }
+.admin-logo span { font-size: 22px; font-weight: 700; color: #12d8c4; font-family: 'Poppins', sans-serif; }
+.admin-card-title { min-width: 0; }
+.admin-card-title strong { display: block; font-size: 16px; font-weight: 600; color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-card-title small { display: block; color: #7b9c99; font-size: 10.5px; margin-top: 3px; font-family: 'Poppins', sans-serif; letter-spacing: .04em; }
+.admin-status { display: inline-block; margin-top: 7px; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1px solid; }
+.admin-status.active { color: #34d399; border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.1); }
+.admin-status.blocked { color: #ff8d8d; border-color: rgba(255,94,94,.4); background: rgba(255,94,94,.12); }
+.admin-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-stat { flex: 1; min-width: 90px; background: #101319; border: 1px solid rgba(255,255,255,.04); border-radius: 10px; padding: 10px 12px; text-align: center; }
+.admin-stat span { display: block; color: #7b9c99; font-size: 9.5px; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+.admin-stat strong { display: block; color: #fff; font-size: 16px; font-weight: 700; margin-top: 4px; font-family: 'Poppins', sans-serif; }
+.admin-password-row { display: flex; gap: 8px; align-items: center; background: #101319; border: 1px solid rgba(255,255,255,.05); border-radius: 10px; padding: 8px 12px; }
+.admin-password-row input { flex: 1; height: 32px; border: 0; background: transparent; color: #12d8c4; font-size: 13px; font-weight: 600; font-family: 'Poppins', sans-serif; letter-spacing: .05em; outline: none; min-width: 0; }
+.admin-eye { background: transparent; border: 0; color: #12d8c4; cursor: pointer; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; }
+.admin-eye:hover { background: rgba(18,216,196,.12); }
+.admin-meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: #596170; font-size: 10.5px; }
+.admin-block-btn { height: 44px; border-radius: 12px; border: 1px solid; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: .2s; }
+.admin-block-btn.block { background: rgba(255,94,94,.12); border-color: rgba(255,94,94,.35); color: #ff8d8d; }
+.admin-block-btn.block:hover { background: rgba(255,94,94,.22); }
+.admin-block-btn.unblock { background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.35); color: #34d399; }
+.admin-block-btn.unblock:hover { background: rgba(34,197,94,.22); }
+.admin-block-btn:disabled { opacity: .6; cursor: not-allowed; }
+.admin-foot { margin-top: 22px; text-align: center; color: #596170; font-size: 11px; line-height: 1.7; }
+.admin-loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #7b9c99; }
+.admin-loading i { font-size: 26px; color: #12d8c4; animation: adminSpin 1s linear infinite; }
+@keyframes adminSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.admin-empty { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #7b9c99; border: 1px dashed rgba(18,216,196,.22); border-radius: 16px; }
+.admin-empty i { font-size: 36px; display: block; margin-bottom: 10px; opacity: .5; }
+@media (max-width: 700px) {
+    .admin-summary { grid-template-columns: 1fr 1fr; }
+    .admin-header { gap: 12px; }
+    .admin-brand h2 { font-size: 18px; }
+    .admin-grid { grid-template-columns: 1fr; }
+}
+.admin-alert-container { position: fixed; top: 25px; left: 0; right: 0; width: 320px; max-width: 90vw; margin: 0 auto; z-index: 9999999; background: #171a21; border: 2px solid #12d8c4; border-radius: 14px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0,0,0,.85); text-align: center; display: flex; align-items: center; gap: 12px; font-size: 12.5px; }
+.admin-alert-container.error { border-color: #ff5e5e; }
+.admin-alert-container i { font-size: 22px; color: #12d8c4; }
+.admin-alert-container.error i { color: #ff5e5e; }
+.admin-alert-container p { flex: 1; color: #fff; font-weight: 600; line-height: 1.5; text-align: left; }
+@media (max-width: 720px) {
+    body { padding: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="admin-container">
+    <header class="admin-header">
+        <div class="admin-brand">
+            <div class="admin-logo">JK</div>
+            <div>
+                <h2>Panel de Comercios</h2>
+                <span>Vista exclusiva · comercios registrados</span>
+            </div>
+        </div>
+        <button type="button" class="admin-btn" id="adminRefresh" onclick="recargar()"><i class="fa-solid fa-rotate"></i> Actualizar</button>
+    </header>
+    <div class="admin-warn">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Panel administrativo exclusivo. Mostra datos sensibles (usuarios, contraseñas, etc.). No lo compartas ni lo publiques públicamente.</span>
+    </div>
+    <div class="admin-summary" id="adminSummary"></div>
+    <div class="admin-toolbar">
+        <div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="adminSearch" placeholder="Buscar por nombre, ID o contraseña..." oninput="renderComercios()"></div>
+    </div>
+    <div class="admin-grid" id="adminGrid">
+        <div class="admin-loading"><i class="fa-solid fa-circle-notch"></i><p style="margin-top:10px">Cargando comercios...</p></div>
+    </div>
+    <div class="admin-foot" id="adminFoot">—</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =====================================================================
+   PANEL DE COMERCIOS — vista exclusiva
+   ===================================================================== */
+window.adminSupabase = window.adminSupabase || window.supabase.createClient(
+    "https://omwbjbmodqybbogyafkz.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9td2JqYm1vZHF5YmJvZ3lhZmt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyMzUxNjgsImV4cCI6MjExMDgxMTE2OH0.F6Bl0k74aZ_fCIBkLIXHEDzDly_mMVpRfjIUj_vvQEI"
+);
+const sg = window.adminSupabase;
+let comercios = [];
+let operaciones = [];
+const adminState = { bloqueando: null };
+
+async function cargar() {
+    mostrarCargando();
+    const foot = document.getElementById('adminFoot');
+    try {
+        const [comerciosRes, opsRes] = await Promise.all([
+            sg.from('comercio').select('*').order('created_at', { ascending: false }),
+            sg.from('operaciones').select('id, comercio_id, total, tipo_operacion, created_at').limit(20000)
+        ]);
+        if (comerciosRes.error) throw comerciosRes.error;
+        comercios = comerciosRes.data || [];
+        if (opsRes.error) { console.warn('operaciones:', opsRes.error); operaciones = []; }
+        else { operaciones = opsRes.data || []; }
+        renderResumen();
+        renderComercios();
+        const now = new Date().toLocaleString('es-CO');
+        foot.innerHTML = 'Actualizado a ' + now + ' · ' + comercios.length + ' comercio(s) en la base de datos';
+    } catch (e) {
+        foot.innerHTML = 'Error al cargar: ' + e.message;
+        mostrarToastError('Error: ' + e.message);
+    }
+}
+function renderResumen() {
+    const total = comercios.length;
+    const blocked = comercios.filter(c => c.bloqueado).length;
+    const active = total - blocked;
+    const ops = operaciones.length;
+    document.getElementById('adminSummary').innerHTML = `
+        <div class="admin-kpi"><span>Comercios</span><strong>${total}</strong><small>en la plataforma</small></div>
+        <div class="admin-kpi k-active"><span>Activos</span><strong>${active}</strong><small>en servicio</small></div>
+        <div class="admin-kpi k-blocked"><span>Bloqueados</span><strong>${blocked}</strong><small>en pausa</small></div>
+        <div class="admin-kpi"><span>Operaciones</span><strong>${ops}</strong><small>total en plataforma</small></div>
+    `;
+}
+function renderComercios() {
+    const grid = document.getElementById('adminGrid');
+    const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
+    const lista = comercios.filter(c => !q ||
+        (c.name || '').toLowerCase().includes(q) ||
+        (c.id || '').toLowerCase().includes(q) ||
+        (c.password || '').toLowerCase().includes(q)
+    );
+    if (lista.length === 0) {
+        grid.innerHTML = '<div class="admin-empty"><i class="fa-solid fa-store"></i><p>No hay comercios que coincidan con la búsqueda.</p></div>';
+        return;
+    }
+    let html = '';
+    lista.forEach(c => {
+        const ops = operaciones.filter(o => o.comercio_id === c.id);
+        const total = ops.reduce((s, o) => s + (Number(o.total) || 0), 0);
+        const inicial = (c.name || 'C').trim().charAt(0).toUpperCase();
+        const logoHtml = c.logo_url
+            ? '<img src="' + c.logo_url + '" alt="Logo">'
+            : '<span>' + inicial + '</span>';
+        const creado = c.created_at ? new Date(c.created_at).toLocaleString('es-CO') : '—';
+        const actualizado = c.updated_at ? new Date(c.updated_at).toLocaleString('es-CO') : '—';
+        const bloqueado = !!c.bloqueado;
+        html += `
+        <div class="admin-card">
+            <div class="admin-card-head">
+                <div class="admin-logo">${logoHtml}</div>
+                <div class="admin-card-title">
+                    <strong>${c.name || '(sin nombre)'}</strong>
+                    <small>ID: ${c.id || '—'}</small>
+                    <span class="admin-status ${bloqueado ? 'blocked' : 'active'}">${bloqueado ? 'Bloqueado' : 'Activo'}</span>
+                </div>
+            </div>
+            <div class="admin-stats">
+                <div class="admin-stat"><span>Operaciones</span><strong>${ops.length}</strong></div>
+                <div class="admin-stat"><span>Total registrado</span><strong>${formatoMoneda(total)}</strong></div>
+            </div>
+            <div class="admin-password-row">
+                <input type="password" class="admin-pass-input" id="pass-${String(c.id).replace(/[^a-zA-Z0-9]/g, '_')}" value="${(c.password || '').replace(/"/g, '&quot;')}" readonly>
+                <button type="button" class="admin-eye" title="Mostrar contraseña" onclick="togglePassword('${String(c.id).replace(/'/g, '\\&#39;')}', this)"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <div class="admin-meta">
+                <small>Creado: ${creado}</small>
+                <small>Actualizado: ${actualizado}</small>
+            </div>
+            <button type="button" class="admin-block-btn ${bloqueado ? 'unblock' : 'block'}" onclick="toggleBloque('${String(c.id).replace(/'/g, '\\&#39;')}', ${bloqueado ? 'true' : 'false'})">
+                <i class="fa-solid ${bloqueado ? 'fa-unlock' : 'fa-lock'}"></i> ${bloqueado ? 'Desbloquear servicio' : 'Bloquear servicio'}
+            </button>
+        </div>`;
+    });
+    grid.innerHTML = html;
+}
+function togglePassword(id, btn) {
+    const input = document.getElementById('pass-' + String(id).replace(/[^a-zA-Z0-9]/g, '_'));
+    if (!input) return;
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+    } else {
+        input.type = 'password';
+        btn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    }
+}
+function formatoMoneda(num) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(Number(num) || 0);
+}
+async function toggleBloque(id, bloqueado) {
+    if (adminState.bloqueando) return;
+    bloqueado = !bloqueado;
+    if (!confirm(`¿${bloqueado ? 'Bloquear' : 'Desbloquear'} el servicio del comercio "${id}"?`)) return;
+    adminState.bloqueando = id;
+    try {
+        const { error } = await sg.from('comercio').update({ bloqueado: bloqueado, updated_at: new Date().toISOString() }).eq('id', id);
+        if (error) throw error;
+        mostrarToastExito('Servicio ' + (bloqueado ? 'bloqueado' : 'desbloqueado') + ' correctamente.');
+        await cargar();
+    } catch (e) {
+        mostrarToastError('Error: ' + e.message);
+    } finally {
+        adminState.bloqueando = null;
+    }
+}
+function mostrarToastExito(mensaje) { mostrarToast(mensaje, false); }
+function mostrarToastError(mensaje) { mostrarToast(mensaje, true); }
+function mostrarToast(mensaje, error) {
+    document.querySelectorAll('.admin-alert-container').forEach(a => a.remove());
+    const t = document.createElement('div');
+    t.className = 'admin-alert-container' + (error ? ' error' : '');
+    t.innerHTML = '<i class="fa-solid ' + (error ? 'fa-circle-xmark' : 'fa-circle-check') + '"></i><p>' + mensaje + '</p>';
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);
+}
+function mostrarCargando() {
+    document.getElementById('adminGrid').innerHTML = '<div class="admin-loading"><i class="fa-solid fa-circle-notch"></i><p style="margin-top:10px">Cargando comercios...</p></div>';
+}
+function recargar() { cargar(); }
+document.addEventListener('DOMContentLoaded', cargar);
+</script>
+</body>
+</html>
