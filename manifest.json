@@ -1,0 +1,28 @@
+{
+  "name": "Sistema JK · Panel de comercios",
+  "short_name": "Sistema JK",
+  "description": "Panel de administración de comercios y estadísticas de Sistema JK.",
+  "id": "/SISTEMAJK-PANEL/",
+  "start_url": "/SISTEMAJK-PANEL/",
+  "scope": "/SISTEMAJK-PANEL/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c1116",
+  "theme_color": "#0c1116",
+  "lang": "es",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/SISTEMAJK-PANEL/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SISTEMAJK-PANEL/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
