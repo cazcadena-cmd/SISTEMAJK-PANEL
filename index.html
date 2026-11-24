@@ -4,258 +4,1660 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Panel administrativo de comercios del Sistema JK: accesos, mensualidades, recordatorios y estadísticas.">
 <title>Panel de Comercios — Sistema JK</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312d8c4'/%3E%3Ctext x='16' y='22' font-size='14' font-weight='700' text-anchor='middle' fill='%23081014' font-family='Arial'%3EJK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Poppins', sans-serif; min-height: 100vh; color: #e9f8f6; background: radial-gradient(circle at top left, #12353a 0%, #0d1117 40%, #090b10 100%); padding: 24px; }
-.admin-container { width: 100%; max-width: 1400px; margin: 0 auto; }
-.admin-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
-.admin-brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
-.admin-logo { width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #12d8c4, #22f5dd); color: #081014; font-size: 18px; font-weight: 700; letter-spacing: .04em; flex-shrink: 0; box-shadow: 0 0 24px rgba(18,216,196,.3); }
-.admin-brand h2 { font-size: 22px; font-weight: 600; color: #ffffff; letter-spacing: .02em; }
-.admin-brand span { color: #7b9c99; font-size: 12px; }
-.admin-btn { height: 46px; padding: 0 18px; border-radius: 12px; border: 1px solid rgba(18,216,196,.35); background: rgba(18,216,196,.10); color: #12d8c4; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: .2s; }
-.admin-btn:hover { background: rgba(18,216,196,.22); }
-.admin-btn:disabled { opacity: .6; cursor: not-allowed; }
-.admin-warn { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,184,76,.35); background: rgba(255,184,76,.08); color: #ffcf7d; font-size: 12px; line-height: 1.5; margin-bottom: 18px; }
-.admin-warn i { color: #ffb84d; font-size: 15px; flex-shrink: 0; }
-.admin-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
-.admin-kpi { padding: 16px 18px; border-radius: 16px; background: #171a21; border: 1px solid rgba(18,216,196,.14); display: flex; flex-direction: column; gap: 4px; }
-.admin-kpi span { color: #7b9c99; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
-.admin-kpi strong { color: #fff; font-size: 24px; font-weight: 700; font-family: 'Poppins', sans-serif; }
-.admin-kpi small { color: #596170; font-size: 10px; }
-.admin-kpi.k-blocked { border-color: rgba(255,94,94,.3); }
-.admin-kpi.k-blocked strong { color: #ff8d8d; }
-.admin-kpi.k-active { border-color: rgba(34,197,94,.25); }
-.admin-kpi.k-active strong { color: #34d399; }
-.admin-toolbar { margin-bottom: 16px; }
-.admin-search { position: relative; display: block; }
-.admin-search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #12d8c4; font-size: 14px; }
-.admin-search input { width: 100%; height: 50px; border: 1px solid rgba(18,216,196,.2); outline: none; border-radius: 13px; background: #171a21; color: #fff; padding: 0 16px 0 46px; font-family: 'Poppins', sans-serif; font-size: 14px; transition: .2s; }
-.admin-search input:focus { border-color: #12d8c4; box-shadow: 0 0 14px rgba(18,216,196,.12); }
-.admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
-.admin-card { background: #171a21; border: 1px solid rgba(18,216,196,.14); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px; transition: border-color .25s, transform .25s; }
-.admin-card:hover { border-color: rgba(18,216,196,.35); transform: translateY(-2px); }
-.admin-card-head { display: flex; align-items: center; gap: 14px; }
-.admin-logo { width: 62px; height: 62px; border-radius: 14px; background: #101319; border: 1px solid rgba(18,216,196,.2); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-.admin-logo img { width: 100%; height: 100%; object-fit: contain; }
-.admin-logo span { font-size: 22px; font-weight: 700; color: #12d8c4; font-family: 'Poppins', sans-serif; }
-.admin-card-title { min-width: 0; }
-.admin-card-title strong { display: block; font-size: 16px; font-weight: 600; color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.admin-card-title small { display: block; color: #7b9c99; font-size: 10.5px; margin-top: 3px; font-family: 'Poppins', sans-serif; letter-spacing: .04em; }
-.admin-status { display: inline-block; margin-top: 7px; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1px solid; }
-.admin-status.active { color: #34d399; border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.1); }
-.admin-status.blocked { color: #ff8d8d; border-color: rgba(255,94,94,.4); background: rgba(255,94,94,.12); }
-.admin-stats { display: flex; gap: 10px; flex-wrap: wrap; }
-.admin-stat { flex: 1; min-width: 90px; background: #101319; border: 1px solid rgba(255,255,255,.04); border-radius: 10px; padding: 10px 12px; text-align: center; }
-.admin-stat span { display: block; color: #7b9c99; font-size: 9.5px; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
-.admin-stat strong { display: block; color: #fff; font-size: 16px; font-weight: 700; margin-top: 4px; font-family: 'Poppins', sans-serif; }
-.admin-password-row { display: flex; gap: 8px; align-items: center; background: #101319; border: 1px solid rgba(255,255,255,.05); border-radius: 10px; padding: 8px 12px; }
-.admin-password-row input { flex: 1; height: 32px; border: 0; background: transparent; color: #12d8c4; font-size: 13px; font-weight: 600; font-family: 'Poppins', sans-serif; letter-spacing: .05em; outline: none; min-width: 0; }
-.admin-eye { background: transparent; border: 0; color: #12d8c4; cursor: pointer; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; }
-.admin-eye:hover { background: rgba(18,216,196,.12); }
-.admin-meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: #596170; font-size: 10.5px; }
-.admin-block-btn { height: 44px; border-radius: 12px; border: 1px solid; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: .2s; }
-.admin-block-btn.block { background: rgba(255,94,94,.12); border-color: rgba(255,94,94,.35); color: #ff8d8d; }
-.admin-block-btn.block:hover { background: rgba(255,94,94,.22); }
-.admin-block-btn.unblock { background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.35); color: #34d399; }
-.admin-block-btn.unblock:hover { background: rgba(34,197,94,.22); }
-.admin-block-btn:disabled { opacity: .6; cursor: not-allowed; }
-.admin-foot { margin-top: 22px; text-align: center; color: #596170; font-size: 11px; line-height: 1.7; }
-.admin-loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #7b9c99; }
-.admin-loading i { font-size: 26px; color: #12d8c4; animation: adminSpin 1s linear infinite; }
-@keyframes adminSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.admin-empty { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #7b9c99; border: 1px dashed rgba(18,216,196,.22); border-radius: 16px; }
-.admin-empty i { font-size: 36px; display: block; margin-bottom: 10px; opacity: .5; }
-@media (max-width: 700px) {
-    .admin-summary { grid-template-columns: 1fr 1fr; }
-    .admin-header { gap: 12px; }
-    .admin-brand h2 { font-size: 18px; }
-    .admin-grid { grid-template-columns: 1fr; }
+:root{
+  --bg:#090b10;
+  --panel:#171a21;
+  --panel2:#101319;
+  --panel3:#0c0f14;
+  --line:rgba(18,216,196,.14);
+  --line-soft:rgba(255,255,255,.06);
+  --mint:#12d8c4;
+  --mint2:#22f5dd;
+  --haze:#7b9c99;
+  --dim:#596170;
+  --white:#e9f8f6;
+  --danger:#ff5e5e;
+  --green:#34d399;
+  --amber:#ffb84d;
+  --radius:16px;
 }
-.admin-alert-container { position: fixed; top: 25px; left: 0; right: 0; width: 320px; max-width: 90vw; margin: 0 auto; z-index: 9999999; background: #171a21; border: 2px solid #12d8c4; border-radius: 14px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0,0,0,.85); text-align: center; display: flex; align-items: center; gap: 12px; font-size: 12.5px; }
-.admin-alert-container.error { border-color: #ff5e5e; }
-.admin-alert-container i { font-size: 22px; color: #12d8c4; }
-.admin-alert-container.error i { color: #ff5e5e; }
-.admin-alert-container p { flex: 1; color: #fff; font-weight: 600; line-height: 1.5; text-align: left; }
-@media (max-width: 720px) {
-    body { padding: 14px; }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-gutter:stable}
+body{
+  font-family:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  min-height:100vh;
+  color:var(--white);
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 0%,rgba(18,126,133,.28) 0%,rgba(13,17,23,0) 38%),
+    radial-gradient(circle at 92% 8%,rgba(12,216,196,.10) 0%,rgba(9,11,16,0) 34%),
+    linear-gradient(160deg,#0e1a1d 0%,#0d1117 32%,#090b10 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
 }
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{color:var(--white)}
+::selection{background:rgba(18,216,196,.28);color:#fff}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.02)}
+::-webkit-scrollbar-thumb{background:rgba(18,216,196,.22);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(18,216,196,.38)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* iconos */
+.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;display:inline-block;vertical-align:middle}
+.ic-wa{width:15px;height:15px;fill:currentColor;stroke:none;flex-shrink:0;display:inline-block;vertical-align:middle}
+
+/* layout */
+.wrap{width:100%;max-width:1440px;margin:0 auto;padding:18px 14px 22px}
+@media(min-width:640px){.wrap{padding:22px 20px 26px}}
+@media(min-width:1024px){.wrap{padding:26px 28px 30px}}
+
+/* cabecera */
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.mark{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;
+  background:linear-gradient(135deg,#22f5dd,#12d8c4 55%,#10b981);
+  color:#07120f;font-size:15px;font-weight:700;letter-spacing:.02em;
+  box-shadow:0 0 22px rgba(18,216,196,.28)}
+.brand h1{font-size:16px;font-weight:600;line-height:1.2;letter-spacing:.01em;white-space:nowrap}
+.brand .sub{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:9.5px;color:var(--haze);line-height:1.3;flex-wrap:wrap}
+.brand .sub b{font-weight:500;color:rgba(52,211,153,.9)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2.4s ease-in-out infinite}
+.sep{color:var(--dim)}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media(max-width:639px){.actions{width:100%}.actions .btn{flex:1}}
+@media(min-width:420px) and (max-width:639px){.brand h1{font-size:18px}.brand .sub{font-size:10.5px}}
+
+.btn{height:40px;border-radius:12px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:11px;font-weight:600;white-space:nowrap;border:1px solid transparent;transition:.18s;text-decoration:none}
+.btn:focus-visible{outline:2px solid rgba(18,216,196,.6);outline-offset:2px}
+.btn-wa{color:#6ee7b7;border-color:rgba(52,211,153,.30);background:rgba(52,211,153,.08)}
+.btn-wa:hover{background:rgba(52,211,153,.16);border-color:rgba(52,211,153,.55)}
+.btn-stats{color:var(--mint);border-color:rgba(18,216,196,.35);background:rgba(18,216,196,.09)}
+.btn-stats:hover{background:rgba(18,216,196,.17);border-color:rgba(18,216,196,.6)}
+.iconbtn{width:40px;height:40px;flex-shrink:0;border-radius:12px;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:var(--haze);transition:.18s}
+.iconbtn:hover{color:var(--mint);border-color:rgba(18,216,196,.35)}
+.iconbtn.spinning .ic{animation:spin .8s linear infinite}
+.lbl-short{display:none}
+@media(max-width:639px){.lbl-full{display:none}.lbl-short{display:inline}}
+
+/* aviso */
+.warn{display:flex;align-items:flex-start;gap:8px;margin-top:13px;padding:10px 12px;border-radius:11px;
+  border:1px solid rgba(255,184,76,.30);background:rgba(255,184,76,.07);color:rgba(255,241,214,.8);font-size:10px;line-height:1.55}
+.warn .ic{width:14px;height:14px;color:#fcd34d;margin-top:1px}
+@media(min-width:640px){.warn{font-size:10.5px}}
+
+/* KPIs compactos en una fila */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:12px}
+@media(min-width:640px){.kpis{gap:8px}}
+.kpi{display:flex;align-items:center;justify-content:space-between;gap:6px;min-width:0;
+  padding:7px 8px;border-radius:11px;border:1px solid var(--line);background:var(--panel)}
+@media(min-width:640px){.kpi{padding:8px 12px;border-radius:12px;gap:8px}}
+.kpi-txt{min-width:0}
+.kpi-lbl{font-size:6.7px;font-weight:600;letter-spacing:.055em;text-transform:uppercase;color:var(--haze);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(min-width:640px){.kpi-lbl{font-size:8.5px;letter-spacing:.1em}}
+.kpi-val{margin-top:2px;font-size:16px;font-weight:600;line-height:1;color:#fff}
+@media(min-width:640px){.kpi-val{font-size:19px}}
+.kpi-ic{display:none;width:27px;height:27px;flex-shrink:0;place-items:center;border-radius:8px;border:1px solid}
+@media(min-width:520px){.kpi-ic{display:grid}}
+.kpi-ic .ic{width:13px;height:13px}
+.kpi-ic.neutral{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.05)}
+.kpi-ic.ok{color:#6ee7b7;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.1)}
+.kpi-ic.bad{color:#fda4af;border-color:rgba(251,113,133,.25);background:rgba(251,113,133,.1)}
+.kpi-ic.mint{color:var(--mint);border-color:rgba(18,216,196,.25);background:rgba(18,216,196,.1)}
+
+/* barra de búsqueda */
+.toolbar{margin-top:12px;display:flex;flex-direction:column;gap:9px;padding:9px;
+  border-radius:15px;border:1px solid var(--line);background:var(--panel)}
+@media(min-width:640px){.toolbar{flex-direction:row;align-items:center}}
+.search{position:relative;flex:1;min-width:0}
+.search>.ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--mint);pointer-events:none}
+.search input{width:100%;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:var(--panel2);
+  padding:0 34px 0 34px;font-size:11.5px;outline:none;transition:.18s}
+.search input::placeholder{color:rgba(89,97,112,.9)}
+.search input:focus{border-color:rgba(18,216,196,.5);box-shadow:0 0 0 1px rgba(18,216,196,.18)}
+.search input::-webkit-search-cancel-button{display:none}
+.clear{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:6px;
+  display:grid;place-items:center;color:var(--haze)}
+.clear:hover{background:rgba(255,255,255,.1);color:#fff}
+.clear .ic{width:12px;height:12px}
+.tools{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.filters{display:flex;padding:2px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:var(--panel2);min-width:0;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filter{height:30px;padding:0 9px;border-radius:7px;font-size:9.5px;font-weight:600;color:var(--haze);white-space:nowrap;transition:.16s}
+.filter span{font-size:8.5px;color:var(--dim);margin-left:4px}
+.filter:hover{color:#fff}
+.filter.active{color:var(--mint);background:rgba(18,216,196,.15);box-shadow:inset 0 0 0 1px rgba(18,216,196,.28)}
+.filter.active span{color:rgba(18,216,196,.8)}
+.count{font-size:9.5px;color:var(--dim);white-space:nowrap;flex-shrink:0}
+@media(max-width:420px){.count{display:none}}
+
+/* sección */
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 8px}
+.section-head h2{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--haze);white-space:nowrap}
+.section-note{display:none;align-items:center;gap:4px;font-size:9px;color:var(--dim)}
+.section-note .ic{width:12px;height:12px}
+@media(min-width:640px){.section-note{display:flex}.mobile-count{display:none}}
+.mobile-count{font-size:9px;color:var(--dim)}
+
+/* rejilla y fichas uniformes */
+.grid{display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:12px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.card{display:flex;flex-direction:column;gap:11px;min-width:0;height:100%;padding:14px;
+  border-radius:18px;border:1px solid var(--line);background:var(--panel);transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{border-color:rgba(18,216,196,.35);transform:translateY(-2px);box-shadow:0 20px 45px -30px rgba(18,216,196,.65)}
+.card-head{display:flex;align-items:flex-start;gap:11px;min-width:0}
+.logo{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.1);font-size:18px;font-weight:700;box-shadow:0 6px 18px -8px rgba(0,0,0,.9)}
+.head-main{min-width:0;flex:1}
+.name-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.name-row h3{font-size:13px;font-weight:600;line-height:1.25;color:#fff;flex:1;min-width:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:33px}
+@media(min-width:640px){.name-row h3{font-size:14px}}
+.status{display:inline-flex;align-items:center;gap:5px;flex-shrink:0;padding:3px 8px;border-radius:99px;border:1px solid;
+  font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.status i{width:5px;height:5px;border-radius:50%;display:block}
+.status.active{color:#6ee7b7;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.1)}
+.status.active i{background:var(--green);animation:pulse 2.4s ease-in-out infinite}
+.status.blocked{color:#fda4af;border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.1)}
+.status.blocked i{background:#fb7185}
+.meta-id{margin-top:3px;font-size:9.5px;letter-spacing:.04em;color:var(--haze);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contact{display:flex;align-items:center;justify-content:space-between;gap:8px;height:40px;width:100%;min-width:0;
+  padding:0 11px;border-radius:11px;border:1px solid rgba(52,211,153,.25);background:rgba(52,211,153,.07);
+  transition:.18s;text-align:left}
+.contact:hover{border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.14)}
+.contact-num{display:flex;align-items:center;gap:7px;min-width:0;font-size:11.5px;font-weight:500;color:#6ee7b7}
+.contact-num span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contact-cta{display:none;flex-shrink:0;font-size:8.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(110,231,183,.7)}
+@media(min-width:400px){.contact-cta{display:inline}}
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mini{padding:7px 9px;border-radius:9px;border:1px solid rgba(255,255,255,.05);background:var(--panel2);min-width:0}
+.mini p{display:flex;align-items:center;gap:4px;font-size:8px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--haze);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini p .ic{width:10px;height:10px}
+.mini strong{margin-top:3px;font-size:15px;font-weight:600;line-height:1.1;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* facturación */
+.billing{padding:9px;border-radius:11px;border:1px solid rgba(255,255,255,.06);background:var(--panel2)}
+.billing-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.billing-head p{display:flex;align-items:center;gap:5px;font-size:8px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--haze);min-width:0}
+.billing-head p .ic{width:12px;height:12px;color:var(--mint)}
+.billing-head strong{font-size:10.5px;font-weight:600;color:var(--mint);white-space:nowrap}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.field{display:block;min-width:0}
+.field>span{display:block;margin-bottom:4px;font-size:8px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.field input,.field select{width:100%;height:30px;min-width:0;border-radius:6px;border:1px solid rgba(255,255,255,.08);
+  background:var(--panel3);padding:0 6px;font-size:10px;outline:none;transition:.16s;color:rgba(255,255,255,.92)}
+.field input:focus,.field select:focus{border-color:rgba(18,216,196,.6);box-shadow:0 0 0 1px rgba(18,216,196,.2)}
+.field input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;filter:invert(64%) sepia(38%) saturate(548%) hue-rotate(124deg) brightness(94%) contrast(92%)}
+.next{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+.next>div{min-width:0}
+.next-lbl{font-size:8px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.next-line{display:flex;align-items:center;gap:5px;margin-top:2px;min-width:0;font-size:10.5px;font-weight:500;color:#fff}
+.next-date{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.soon{flex-shrink:0;padding:1px 4px;border-radius:3px;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.1);color:#fcd34d;font-size:7.5px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.remember{display:inline-flex;align-items:center;gap:5px;flex-shrink:0;height:28px;padding:0 9px;border-radius:7px;
+  border:1px solid rgba(18,216,196,.3);background:rgba(18,216,196,.1);color:var(--mint);font-size:9.5px;font-weight:600;transition:.16s}
+.remember:hover{background:rgba(18,216,196,.2);border-color:rgba(18,216,196,.55)}
+.remember .ic{width:12px;height:12px}
+.next.flash{animation:flash .7s ease}
+
+/* contraseña */
+.passrow{display:flex;align-items:center;gap:7px;height:40px;min-width:0;padding:0 9px;
+  border-radius:11px;border:1px solid rgba(255,255,255,.06);background:var(--panel2)}
+.passrow>.ic{width:13px;height:13px;color:var(--haze)}
+.passrow input{height:100%;flex:1;min-width:0;border:0;background:transparent;font-size:11px;font-weight:500;
+  letter-spacing:.06em;color:var(--mint);outline:none}
+.eye{width:27px;height:27px;flex-shrink:0;border-radius:6px;display:grid;place-items:center;color:var(--mint);transition:.16s}
+.eye:hover{background:rgba(18,216,196,.1)}
+.eye .ic{width:13px;height:13px}
+.change{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;height:27px;padding:0 8px;border-radius:6px;
+  border:1px solid rgba(18,216,196,.25);background:rgba(18,216,196,.08);color:var(--mint);
+  font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:.16s}
+.change:hover{background:rgba(18,216,196,.2)}
+.change .ic{width:10px;height:10px}
+.meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:8.8px;color:var(--dim);line-height:1.3}
+.meta-row span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta-row span:last-child{text-align:right}
+.block-btn{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:38px;
+  border-radius:11px;border:1px solid;font-size:11px;font-weight:600;transition:.18s}
+.block-btn .ic{width:14px;height:14px}
+.block-btn.block{color:#fda4af;border-color:rgba(251,113,133,.35);background:rgba(251,113,133,.1)}
+.block-btn.block:hover{background:rgba(251,113,133,.2)}
+.block-btn.unblock{color:#6ee7b7;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.1)}
+.block-btn.unblock:hover{background:rgba(52,211,153,.2)}
+
+/* vacío y pie */
+.empty{display:grid;place-items:center;padding:44px 16px;text-align:center;border-radius:16px;
+  border:1px dashed rgba(18,216,196,.25);background:rgba(23,26,33,.6)}
+.empty>.ic{width:32px;height:32px;color:rgba(18,216,196,.4)}
+.empty p{margin-top:8px;font-size:12px;color:rgba(255,255,255,.8)}
+.empty button{margin-top:12px;height:32px;padding:0 12px;border-radius:8px;border:1px solid rgba(18,216,196,.3);
+  background:rgba(18,216,196,.1);color:var(--mint);font-size:10.5px;font-weight:600}
+.foot{margin-top:22px;padding-top:13px;border-top:1px solid rgba(255,255,255,.06);text-align:center;color:var(--dim);font-size:9px;line-height:1.7}
+.foot p+p{margin-top:2px}
+
+/* modales */
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(3px);animation:fade .18s ease both}
+@media(min-width:640px){.overlay{align-items:center;padding:16px}}
+.modal{position:relative;display:flex;flex-direction:column;width:100%;max-height:93dvh;overflow:hidden;
+  border-radius:24px 24px 0 0;border:1px solid rgba(18,216,196,.2);background:#12161d;
+  box-shadow:0 30px 90px -20px rgba(0,0,0,.95);animation:slideup .24s cubic-bezier(.2,.9,.3,1) both}
+@media(min-width:640px){.modal{max-width:520px;border-radius:16px}}
+.modal.sm{max-width:440px}
+.modal.xl{max-width:1040px}
+.modal::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(18,216,196,.6),transparent);pointer-events:none}
+.modal-head{display:flex;align-items:flex-start;gap:11px;padding:15px 16px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.modal-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;border:1px solid}
+.modal-ic .ic{width:17px;height:17px}
+.tone-mint{color:var(--mint);border-color:rgba(18,216,196,.25);background:rgba(18,216,196,.1)}
+.tone-danger{color:#fda4af;border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.1)}
+.tone-success{color:#6ee7b7;border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.1)}
+.tone-sky{color:#7dd3fc;border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.1)}
+.modal-main{min-width:0;flex:1}
+.modal-main h2{font-size:14px;font-weight:600;line-height:1.35;color:#fff}
+.modal-sub{margin-top:2px;font-size:10.5px;line-height:1.5;color:var(--haze);min-width:0}
+.modal-sub b{font-weight:500;color:rgba(255,255,255,.8)}
+.x{width:30px;height:30px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;
+  border:1px solid transparent;color:var(--haze);transition:.16s;margin:-2px -4px 0 0}
+.x:hover{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff}
+.x .ic{width:15px;height:15px}
+.modal-body{min-height:0;flex:1;overflow-y:auto;padding:15px 16px}
+.modal-foot{flex-shrink:0;padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);background:var(--panel2)}
+.foot-row{display:flex;flex-direction:column-reverse;gap:8px}
+@media(min-width:520px){.foot-row{flex-direction:row;justify-content:flex-end;align-items:center}
+.foot-row.split{justify-content:space-between}}
+.foot-row.split{display:flex;flex-direction:column-reverse;gap:8px}
+@media(min-width:560px){.foot-row.split{flex-direction:row;justify-content:space-between;align-items:center}}
+.mbtn{height:40px;border-radius:11px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  font-size:11px;font-weight:600;border:1px solid transparent;transition:.16s;white-space:nowrap}
+.mbtn .ic{width:14px;height:14px}
+.mbtn:disabled{opacity:.45;cursor:not-allowed}
+.mbtn-ghost{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--haze)}
+.mbtn-ghost:hover{border-color:rgba(255,255,255,.2);color:#fff}
+.mbtn-mint{border-color:rgba(18,216,196,.4);background:rgba(18,216,196,.15);color:var(--mint)}
+.mbtn-mint:hover{background:rgba(18,216,196,.25)}
+.mbtn-green{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.14);color:#6ee7b7}
+.mbtn-green:hover{background:rgba(52,211,153,.24)}
+.mbtn-danger{border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.14);color:#fda4af}
+.mbtn-danger:hover{background:rgba(251,113,133,.24)}
+.mbtn-white{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.85)}
+.mbtn-white:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.1)}
+
+/* contenido de modales */
+.mpane{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border-radius:11px;
+  border:1px solid rgba(255,255,255,.07);background:var(--panel2);min-width:0}
+.mpane-lbl{font-size:8.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.mpane-val{margin-top:3px;font-size:12px;font-weight:600;color:var(--mint);letter-spacing:.06em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.merchant-line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px;border-radius:11px;
+  border:1px solid rgba(255,255,255,.07);background:var(--panel2)}
+.merchant-line .who{min-width:0}
+.merchant-line strong{display:block;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.merchant-line small{display:block;margin-top:2px;font-size:9.5px;color:var(--haze)}
+.wa-chip{display:inline-flex;align-items:center;gap:5px;flex-shrink:0;padding:4px 7px;border-radius:6px;
+  border:1px solid rgba(52,211,153,.25);background:rgba(52,211,153,.1);color:#6ee7b7;font-size:9px;
+  font-weight:500;text-decoration:none;white-space:nowrap}
+.wa-chip:hover{background:rgba(52,211,153,.2)}
+.mtext{font-size:11.5px;line-height:1.65;color:var(--haze)}
+.mtext b{color:rgba(255,255,255,.85);font-weight:500}
+.note{display:flex;align-items:flex-start;gap:7px;padding:9px 11px;border-radius:9px;border:1px solid;
+  font-size:9.8px;line-height:1.6}
+.note .ic{width:13px;height:13px;margin-top:1px}
+.note.mint{border-color:rgba(18,216,196,.2);background:rgba(18,216,196,.05);color:var(--haze)}
+.note.mint .ic{color:var(--mint)}
+.note.amber{border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.06);color:rgba(253,230,138,.8)}
+.note.amber .ic{color:#fcd34d}
+.note.sky{border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.06);color:rgba(186,230,253,.8)}
+.note.sky .ic{color:#7dd3fc}
+.alert-error{padding:8px 11px;border-radius:8px;border:1px solid rgba(251,113,133,.3);
+  background:rgba(251,113,133,.1);color:#fda4af;font-size:10px;line-height:1.5}
+.form-group{display:block}
+.form-lbl{display:block;margin-bottom:6px;font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--haze)}
+.form-lbl.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.form-lbl small{font-size:9px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--dim)}
+.inputwrap{display:flex;align-items:center;gap:7px;height:40px;padding:0 10px;border-radius:11px;
+  border:1px solid rgba(255,255,255,.09);background:var(--panel3);transition:.16s}
+.inputwrap:focus-within{border-color:rgba(18,216,196,.6);box-shadow:0 0 0 1px rgba(18,216,196,.18)}
+.inputwrap>.ic{width:14px;height:14px;color:var(--dim);flex-shrink:0}
+.inputwrap input{flex:1;min-width:0;height:100%;border:0;background:transparent;outline:none;font-size:12px;letter-spacing:.03em}
+.inputwrap input::placeholder{color:rgba(89,97,112,.8)}
+.eye-btn,.gen-btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;flex-shrink:0;
+  height:27px;border-radius:6px;color:var(--haze);transition:.16s}
+.eye-btn{width:27px}
+.eye-btn:hover{background:rgba(255,255,255,.06);color:var(--mint)}
+.eye-btn .ic{width:14px;height:14px}
+.gen-btn{padding:0 7px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  font-size:8.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.gen-btn:hover{border-color:rgba(18,216,196,.3);color:var(--mint)}
+.gen-btn .ic{width:11px;height:11px}
+.strength{display:flex;gap:4px;margin-top:7px}
+.strength i{display:block;height:4px;flex:1;border-radius:99px;background:rgba(255,255,255,.1)}
+.strength i.on.weak{background:#fbbf24}
+.strength i.on.good{background:var(--green)}
+.strength-lbl{margin-top:4px;font-size:9px;color:var(--dim)}
+.strength-lbl b{font-weight:500;color:var(--haze)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+@media(min-width:520px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mstat{padding:8px 10px;border-radius:9px;border:1px solid rgba(255,255,255,.06);background:var(--panel2);min-width:0}
+.mstat span{display:block;font-size:7.8px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mstat strong{display:block;margin-top:2px;font-size:11px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mstat strong.mint{color:var(--mint)}
+.mfield{display:block;width:100%}
+.mfield>span{display:block;margin-bottom:6px;font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--haze)}
+.mfield input[type=date],.mfield textarea{width:100%;border-radius:11px;border:1px solid rgba(255,255,255,.09);
+  background:var(--panel3);padding:0 11px;font-size:12px;outline:none;transition:.16s;color:#fff}
+.mfield input[type=date]{height:40px}
+.mfield textarea{padding:10px 11px;line-height:1.65;resize:vertical;font-size:11.5px;min-height:120px}
+.wa-text{width:100%;margin-top:6px;min-height:210px;border-radius:11px;border:1px solid rgba(255,255,255,.09);
+  background:var(--panel3);padding:10px 11px;font-size:11.5px;line-height:1.65;resize:vertical;outline:none;color:#fff;transition:.16s}
+.wa-text:focus{border-color:rgba(18,216,196,.6);box-shadow:0 0 0 1px rgba(18,216,196,.18)}
+@media(max-width:639px){.wa-text{min-height:140px}}
+.mfield input:focus,.mfield textarea:focus{border-color:rgba(18,216,196,.6);box-shadow:0 0 0 1px rgba(18,216,196,.18)}
+.mfield textarea::placeholder{color:rgba(89,97,112,.8)}
+.help{margin-top:4px;font-size:9px;color:var(--dim)}
+
+/* whatsapp editor */
+.wa-grid{display:grid;grid-template-columns:1fr;gap:15px}
+@media(min-width:768px){.wa-grid{grid-template-columns:1.15fr .85fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.chip{padding:4px 7px;border-radius:6px;border:1px solid rgba(18,216,196,.25);background:rgba(18,216,196,.06);
+  color:var(--mint);font-size:9px;font-weight:500;transition:.16s}
+.chip:hover{border-color:rgba(18,216,196,.5);background:rgba(18,216,196,.15)}
+.chat{overflow:hidden;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0b141a}
+.chat-top{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.1);background:#1f2c34}
+.chat-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  background:linear-gradient(135deg,#12d8c4,#059669);color:#052e26;font-size:9px;font-weight:700}
+.chat-who{min-width:0;flex:1}
+.chat-who strong{display:block;font-size:10px;font-weight:600;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-who small{display:block;font-size:8px;color:rgba(110,231,183,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-online{font-size:8.5px;color:rgba(255,255,255,.4);flex-shrink:0}
+.chat-body{max-height:300px;min-height:225px;overflow-y:auto;padding:11px;
+  background:radial-gradient(circle at 20% 30%,rgba(18,216,196,.06),transparent 60%)}
+.bubble{margin-left:auto;width:fit-content;max-width:92%;padding:8px 9px;border-radius:9px 0 9px 9px;background:#005c4b;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.bubble p{white-space:pre-wrap;word-break:break-word;font-size:10.5px;line-height:1.65;color:rgba(255,255,255,.95)}
+.bubble time{display:block;margin-top:3px;text-align:right;font-size:7.5px;color:rgba(255,255,255,.5)}
+.chat-foot{display:flex;align-items:center;gap:7px;padding:7px 9px;border-top:1px solid rgba(255,255,255,.1);background:#1f2c34}
+.chat-input{height:26px;flex:1;border-radius:99px;background:#2a3942}
+.chat-send{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#10b981;color:#fff;flex-shrink:0}
+.chat-send .ic-wa{width:13px;height:13px}
+.preview-target{margin-top:9px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:var(--panel2)}
+.preview-target span{display:block;font-size:8px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.preview-target strong{display:block;margin-top:2px;font-size:10px;font-weight:500;color:rgba(255,255,255,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-target small{display:block;font-size:9px;color:rgba(110,231,183,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* estadísticas */
+.stats-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.stats-top p{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--haze)}
+.ranges{display:flex;padding:2px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:var(--panel2)}
+.range{height:26px;padding:0 9px;border-radius:6px;font-size:9.5px;font-weight:600;color:var(--haze);transition:.16s}
+.range:hover{color:#fff}
+.range.active{background:rgba(18,216,196,.15);color:var(--mint);box-shadow:inset 0 0 0 1px rgba(18,216,196,.25)}
+.skpis{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+@media(min-width:640px){.skpis{grid-template-columns:repeat(4,1fr)}}
+.skpi{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:var(--panel2);min-width:0}
+.skpi-head{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.skpi-head span{font-size:7.8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--haze);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skpi-ic{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;border:1px solid;flex-shrink:0}
+.skpi-ic .ic{width:11px;height:11px}
+.skpi strong{display:block;margin-top:3px;font-size:17px;font-weight:600;line-height:1.1;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skpi strong.down{color:#fda4af}
+.skpi small{display:block;margin-top:2px;font-size:8px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.charts{display:grid;grid-template-columns:1fr;gap:9px;margin-top:9px}
+@media(min-width:860px){.charts{grid-template-columns:2fr 1fr}}
+.chart{padding:11px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:var(--panel2);min-width:0}
+.chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.chart-head p{font-size:10px;font-weight:600;color:#fff}
+.chart-head small{display:block;margin-top:1px;font-size:8px;color:var(--dim)}
+.chart-trend{display:inline-flex;align-items:center;gap:4px;font-size:8px;color:var(--mint);flex-shrink:0}
+.chart-trend .ic{width:11px;height:11px}
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px;margin-top:12px}
+@media(min-width:640px){.bars{gap:10px}}
+.barcol{display:flex;flex-direction:column;justify-content:flex-end;flex:1;min-width:0;height:100%}
+.barval{font-size:8px;color:var(--haze);text-align:center;margin-bottom:3px;white-space:nowrap}
+.barwrap{display:flex;align-items:flex-end;flex:1;width:100%}
+.bar{width:100%;border-radius:5px 5px 0 0;background:linear-gradient(to top,rgba(18,216,196,.08),rgba(18,216,196,.32),rgba(18,216,196,.65));
+  transform-origin:bottom;animation:rise .6s cubic-bezier(.2,.9,.3,1) both;min-height:3px}
+.bar.now{background:linear-gradient(to top,rgba(18,216,196,.25),rgba(18,216,196,.6),#12d8c4)}
+.barlbl{font-size:8px;color:var(--dim);text-align:center;margin-top:4px;text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.barcol.now .barlbl{color:var(--mint);font-weight:600}
+.chart-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding-top:7px;
+  border-top:1px solid rgba(255,255,255,.05);font-size:8.5px;color:var(--dim)}
+.chart-foot b{color:var(--mint);font-weight:600}
+.donut-wrap{display:flex;align-items:center;gap:10px;margin-top:9px}
+.donut{position:relative;width:88px;height:88px;flex-shrink:0}
+.donut svg{width:100%;height:100%}
+.donut-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.donut-center b{display:block;font-size:13px;font-weight:600;line-height:1;color:#fff}
+.donut-center span{display:block;margin-top:2px;font-size:7px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.legend{list-style:none;min-width:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.legend li{display:flex;align-items:center;gap:5px;min-width:0}
+.legend i{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.legend span{flex:1;min-width:0;font-size:9px;color:var(--haze);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend b{font-size:9px;font-weight:600;color:rgba(255,255,255,.85);flex-shrink:0}
+.volume-box{margin-top:8px;padding:6px 8px;border-radius:7px;border:1px solid rgba(255,255,255,.05);background:var(--panel3)}
+.volume-box span{display:block;font-size:7.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.volume-box b{display:block;margin-top:1px;font-size:11px;font-weight:600;color:var(--mint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bottom-grid{display:grid;grid-template-columns:1fr;gap:9px;margin-top:9px}
+@media(min-width:860px){.bottom-grid{grid-template-columns:1fr 1fr}}
+.rank-list,.recent-list{list-style:none;margin-top:9px}
+.rank-item{display:flex;align-items:center;gap:7px;min-width:0;margin-bottom:8px}
+.rank-item:last-child{margin-bottom:0}
+.rank-num{width:22px;height:22px;border-radius:6px;flex-shrink:0;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-size:8.5px;font-weight:700;color:var(--haze)}
+.rank-num.top{color:var(--mint);border-color:rgba(18,216,196,.35);background:rgba(18,216,196,.15)}
+.rank-av{width:23px;height:23px;border-radius:6px;flex-shrink:0;display:grid;place-items:center;font-size:9px;font-weight:700}
+.rank-main{min-width:0;flex:1}
+.rank-line{display:flex;align-items:baseline;justify-content:space-between;gap:7px}
+.rank-line span{font-size:9.5px;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.rank-line b{flex-shrink:0;font-size:8.5px;font-weight:600;color:var(--mint)}
+.rank-bar{height:3px;margin-top:4px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}
+.rank-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,rgba(5,150,105,.6),var(--mint))}
+.recent-item{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.recent-item:last-child{border-bottom:0}
+.typebadge{flex-shrink:0;padding:2px 5px;border-radius:4px;border:1px solid;font-size:7px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.t-Venta{color:var(--mint);border-color:rgba(18,216,196,.3);background:rgba(18,216,196,.1)}
+.t-Recaudo{color:#7dd3fc;border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.1)}
+.t-Abono{color:#c4b5fd;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.1)}
+.t-Devolución{color:#fda4af;border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.1)}
+.recent-mid{min-width:0;flex:1;font-size:9px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-val{text-align:right;flex-shrink:0}
+.recent-val b{display:block;font-size:9px;font-weight:600;color:#fff;white-space:nowrap}
+.recent-val small{display:block;font-size:7.5px;color:var(--dim);white-space:nowrap}
+.stats-foot{display:flex;align-items:center;gap:6px;font-size:9px;line-height:1.5;color:var(--dim);min-width:0}
+.stats-foot .ic{width:13px;height:13px;color:rgba(18,216,196,.7);flex-shrink:0}
+
+/* toasts */
+.toasts{position:fixed;bottom:14px;left:0;right:0;z-index:100;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 12px;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:flex-start;gap:10px;width:100%;max-width:430px;padding:11px 12px;
+  border-radius:12px;border:1px solid;background:rgba(23,26,33,.98);box-shadow:0 18px 45px -10px rgba(0,0,0,.9);
+  backdrop-filter:blur(8px);animation:toastup .22s ease both}
+@media(min-width:768px){.toasts{bottom:20px;right:20px;left:auto;width:430px;padding:0}}
+.toast.success{border-color:rgba(52,211,153,.45)}
+.toast.error{border-color:rgba(251,113,133,.5)}
+.toast.info{border-color:rgba(18,216,196,.4)}
+.toast>.ic{width:17px;height:17px;margin-top:1px}
+.toast.success>.ic{color:#6ee7b7}
+.toast.error>.ic{color:#fda4af}
+.toast.info>.ic{color:var(--mint)}
+.toast-txt{min-width:0;flex:1}
+.toast-txt b{display:block;font-size:11.5px;line-height:1.45;color:#fff;font-weight:600}
+.toast-txt small{display:block;margin-top:2px;font-size:10px;line-height:1.5;color:var(--haze)}
+.toast-x{width:18px;height:18px;flex-shrink:0;display:grid;place-items:center;color:var(--dim);border-radius:4px}
+.toast-x:hover{color:#fff}
+.toast-x .ic{width:11px;height:11px}
+
+/* animaciones */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}50%{box-shadow:0 0 0 4px rgba(52,211,153,0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slideup{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes toastin{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes toastup{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes rise{from{transform:scaleY(.02);opacity:.3}to{transform:scaleY(1);opacity:1}}
+@keyframes flash{0%{color:var(--mint);text-shadow:0 0 12px rgba(18,216,196,.6)}100%{color:inherit}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
 </head>
 <body>
-<div class="admin-container">
-    <header class="admin-header">
-        <div class="admin-brand">
-            <div class="admin-logo">JK</div>
-            <div>
-                <h2>Panel de Comercios</h2>
-                <span>Vista exclusiva · comercios registrados</span>
-            </div>
-        </div>
-        <button type="button" class="admin-btn" id="adminRefresh" onclick="recargar()"><i class="fa-solid fa-rotate"></i> Actualizar</button>
-    </header>
-    <div class="admin-warn">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>Panel administrativo exclusivo. Mostra datos sensibles (usuarios, contraseñas, etc.). No lo compartas ni lo publiques públicamente.</span>
-    </div>
-    <div class="admin-summary" id="adminSummary"></div>
-    <div class="admin-toolbar">
-        <div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="adminSearch" placeholder="Buscar por nombre, ID o contraseña..." oninput="renderComercios()"></div>
-    </div>
-    <div class="admin-grid" id="adminGrid">
-        <div class="admin-loading"><i class="fa-solid fa-circle-notch"></i><p style="margin-top:10px">Cargando comercios...</p></div>
-    </div>
-    <div class="admin-foot" id="adminFoot">—</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* =====================================================================
-   PANEL DE COMERCIOS — vista exclusiva
-   ===================================================================== */
-window.adminSupabase = window.adminSupabase || window.supabase.createClient(
-    "https://omwbjbmodqybbogyafkz.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9td2JqYm1vZHF5YmJvZ3lhZmt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyMzUxNjgsImV4cCI6MjExMDgxMTE2OH0.F6Bl0k74aZ_fCIBkLIXHEDzDly_mMVpRfjIUj_vvQEI"
-);
-const sg = window.adminSupabase;
-let comercios = [];
-let operaciones = [];
-const adminState = { bloqueando: null };
 
-async function cargar() {
-    mostrarCargando();
-    const foot = document.getElementById('adminFoot');
-    try {
-        const [comerciosRes, opsRes] = await Promise.all([
-            sg.from('comercio').select('*').order('created_at', { ascending: false }),
-            sg.from('operaciones').select('id, comercio_id, total, tipo_operacion, created_at').limit(20000)
-        ]);
-        if (comerciosRes.error) throw comerciosRes.error;
-        comercios = comerciosRes.data || [];
-        if (opsRes.error) { console.warn('operaciones:', opsRes.error); operaciones = []; }
-        else { operaciones = opsRes.data || []; }
-        renderResumen();
-        renderComercios();
-        const now = new Date().toLocaleString('es-CO');
-        foot.innerHTML = 'Actualizado a ' + now + ' · ' + comercios.length + ' comercio(s) en la base de datos';
-    } catch (e) {
-        foot.innerHTML = 'Error al cargar: ' + e.message;
-        mostrarToastError('Error: ' + e.message);
-    }
+<!-- ===== ICONOS SVG EN LÍNEA ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M9 20v-5h6v5"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h5"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3v4"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><path d="M2 2l20 20"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.51.86l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .86-.51z"/><path d="m15 5 5 5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-calendar-plus" viewBox="0 0 24 24"><path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h8"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M16 19h6"/><path d="M19 16v6"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M15.2 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.8z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24"><path d="m15 4 5 5"/><path d="M3 21 17.5 6.5"/><path d="M18 2v4"/><path d="M20 4h-4"/><path d="M6 4v2"/><path d="M7 5H5"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M7 7l10 10"/><path d="M17 7v10H7"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10"/><path d="M19 10v10"/><path d="M9 10v10"/><path d="M15 10v10"/><path d="M3 20h18"/></symbol>
+  <symbol id="i-search-x" viewBox="0 0 24 24"><path d="m13.5 8.5-5 5"/><path d="m8.5 8.5 5 5"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">JK</div>
+      <div style="min-width:0">
+        <h1>Panel de Comercios</h1>
+        <p class="sub"><span class="dot"></span><b>Vista exclusiva</b><span class="sep">·</span><span id="brandCount">12 comercios</span></p>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-wa" data-action="template" title="Configurar el mensaje predeterminado de WhatsApp">
+        <svg class="ic"><use href="#i-message"></use></svg>
+        <span class="lbl-full">Mensaje WhatsApp</span><span class="lbl-short">WhatsApp</span>
+      </button>
+      <button type="button" class="btn btn-stats" data-action="stats" title="Abrir estadísticas generales de la plataforma">
+        <svg class="ic"><use href="#i-chart"></use></svg> Estadísticas
+      </button>
+      <button type="button" class="iconbtn" id="refreshBtn" data-action="refresh" title="Actualizar panel" aria-label="Actualizar panel">
+        <svg class="ic"><use href="#i-refresh"></use></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="warn">
+    <svg class="ic"><use href="#i-alert"></use></svg>
+    <p>Panel administrativo exclusivo. Muestra datos sensibles (usuarios, contraseñas y teléfonos). No compartas ni publiques esta información.</p>
+  </div>
+
+  <section class="kpis" aria-label="Resumen general">
+    <div class="kpi"><div class="kpi-txt"><p class="kpi-lbl">Comercios</p><p class="kpi-val" id="kpiTotal">12</p></div><span class="kpi-ic neutral"><svg class="ic"><use href="#i-store"></use></svg></span></div>
+    <div class="kpi"><div class="kpi-txt"><p class="kpi-lbl">Activos</p><p class="kpi-val" id="kpiActive">10</p></div><span class="kpi-ic ok"><svg class="ic"><use href="#i-shield-check"></use></svg></span></div>
+    <div class="kpi"><div class="kpi-txt"><p class="kpi-lbl">Bloqueados</p><p class="kpi-val" id="kpiBlocked">2</p></div><span class="kpi-ic bad"><svg class="ic"><use href="#i-shield-alert"></use></svg></span></div>
+    <div class="kpi"><div class="kpi-txt"><p class="kpi-lbl">Operaciones</p><p class="kpi-val" id="kpiOps">1</p></div><span class="kpi-ic mint"><svg class="ic"><use href="#i-activity"></use></svg></span></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg class="ic"><use href="#i-search"></use></svg>
+      <input type="search" id="searchInput" placeholder="Buscar comercio, ID o teléfono…" aria-label="Buscar comercios" autocomplete="off">
+      <button type="button" class="clear" id="clearSearch" data-action="clear-search" aria-label="Limpiar búsqueda" hidden><svg class="ic"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="tools">
+      <div class="filters" id="filters" role="group" aria-label="Filtrar comercios">
+        <button type="button" class="filter active" data-filter="todos">Todos <span id="fCountAll">12</span></button>
+        <button type="button" class="filter" data-filter="activos">Activos <span id="fCountActive">10</span></button>
+        <button type="button" class="filter" data-filter="bloqueados">Bloqueados <span id="fCountBlocked">2</span></button>
+      </div>
+      <p class="count" id="resultCount">12 de 12</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="section-head">
+      <h2>Comercios registrados</h2>
+      <p class="section-note"><svg class="ic"><use href="#i-store"></use></svg> Mismo tamaño de ficha para todos</p>
+      <p class="mobile-count" id="visibleCount">12 visibles</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer class="foot">
+    <p id="footUpdated">Actualizado —</p>
+    <p>Sistema JK · Panel de Comercios · Los cambios se guardan en este dispositivo.</p>
+  </footer>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div id="modalRoot"></div>
+
+<script>
+"use strict";
+/* =====================================================================
+   PANEL DE COMERCIOS — SISTEMA JK
+   Aplicación autónoma en un solo archivo.
+   Los datos se conservan en el almacenamiento local del dispositivo.
+   ===================================================================== */
+
+/* ----------------------------- Datos ----------------------------- */
+var STORE_KEY = "jk.comercios.single.v1";
+var TEMPLATE_KEY = "jk.plantilla_whatsapp.single.v1";
+
+var ACCENTS = [
+  { grad: "linear-gradient(135deg,#5eead4,#34d399 55%,#059669)", ink: "#052e26" },
+  { grad: "linear-gradient(135deg,#67e8f9,#38bdf8 55%,#2563eb)", ink: "#082f49" },
+  { grad: "linear-gradient(135deg,#fde68a,#fbbf24 55%,#f97316)", ink: "#451a03" },
+  { grad: "linear-gradient(135deg,#f0abfc,#c084fc 55%,#4f46e5)", ink: "#3b0764" },
+  { grad: "linear-gradient(135deg,#fda4af,#f472b6 55%,#e11d48)", ink: "#4c0519" },
+  { grad: "linear-gradient(135deg,#d9f99d,#a3e635 55%,#22c55e)", ink: "#1a2e05" },
+  { grad: "linear-gradient(135deg,#e2e8f0,#94a3b8 55%,#475569)", ink: "#0f172a" },
+  { grad: "linear-gradient(135deg,#a5f3fc,#2dd4bf 55%,#0891b2)", ink: "#083344" }
+];
+
+var CYCLES = [
+  { days: 7, label: "Semanal" },
+  { days: 15, label: "Quincenal" },
+  { days: 30, label: "Mensual" },
+  { days: 60, label: "Bimestral" },
+  { days: 90, label: "Trimestral" },
+  { days: 365, label: "Anual" }
+];
+
+var SEED = [
+  { id:"JK-1001", name:"Panadería La Espiga Dorada", password:"espiga2026", phone:"573104567890", bloqueado:false, created_at:"2025-10-28T14:32:00", updated_at:"2026-12-03T09:15:00", inicio_cobro:"2025-11-05", ciclo_dias:30, mensualidad:89000, accent:0 },
+  { id:"JK-1002", name:"Restaurante Sabor Costeño", password:"costeno2026", phone:"573152340981", bloqueado:false, created_at:"2025-10-30T11:05:00", updated_at:"2026-12-01T16:48:00", inicio_cobro:"2025-11-01", ciclo_dias:30, mensualidad:129000, accent:2 },
+  { id:"JK-1003", name:"Minimercado El Buen Precio", password:"minimarket1", phone:"573201234567", bloqueado:true, created_at:"2025-11-02T08:20:00", updated_at:"2026-12-27T10:02:00", inicio_cobro:"2025-11-10", ciclo_dias:30, mensualidad:79000, accent:3 },
+  { id:"JK-1004", name:"Farmacia San Rafael", password:"rafael2026", phone:"573007654321", bloqueado:false, created_at:"2025-11-06T15:45:00", updated_at:"2026-12-02T12:30:00", inicio_cobro:"2025-11-15", ciclo_dias:30, mensualidad:149000, accent:1 },
+  { id:"JK-1005", name:"Barbería Don Jaime", password:"barberjk", phone:"573112223344", bloqueado:false, created_at:"2025-11-10T09:12:00", updated_at:"2026-12-30T18:22:00", inicio_cobro:"2025-11-20", ciclo_dias:15, mensualidad:59000, accent:6 },
+  { id:"JK-1006", name:"Café Aroma de la Montaña", password:"aroma2026", phone:"573184455667", bloqueado:false, created_at:"2025-11-14T13:00:00", updated_at:"2026-12-04T08:05:00", inicio_cobro:"2025-11-25", ciclo_dias:30, mensualidad:99000, accent:2 },
+  { id:"JK-1007", name:"Boutique Luna & Sol", password:"lunasol26", phone:"573206677889", bloqueado:true, created_at:"2025-11-18T17:40:00", updated_at:"2026-11-22T11:55:00", inicio_cobro:"2025-12-01", ciclo_dias:30, mensualidad:119000, accent:4 },
+  { id:"JK-1008", name:"Ferretería El Tornillo Feliz", password:"tornillo26", phone:"573145566778", bloqueado:false, created_at:"2025-11-22T10:35:00", updated_at:"2026-12-05T14:10:00", inicio_cobro:"2025-12-05", ciclo_dias:30, mensualidad:109000, accent:5 },
+  { id:"JK-1009", name:"Heladería Polar del Caribe", password:"polar2026", phone:"573059988776", bloqueado:false, created_at:"2025-12-02T16:25:00", updated_at:"2026-12-31T09:40:00", inicio_cobro:"2025-12-10", ciclo_dias:7, mensualidad:39000, accent:1 },
+  { id:"JK-1010", name:"Papelería El Lápiz Rojo", password:"lapizrojo1", phone:"573173322110", bloqueado:false, created_at:"2025-12-08T12:15:00", updated_at:"2026-12-03T15:20:00", inicio_cobro:"2025-12-15", ciclo_dias:30, mensualidad:69000, accent:4 },
+  { id:"JK-1011", name:"Frutería La Cosecha", password:"cosecha26", phone:"573215544332", bloqueado:false, created_at:"2025-12-15T08:55:00", updated_at:"2026-12-06T07:30:00", inicio_cobro:"2026-01-05", ciclo_dias:15, mensualidad:65000, accent:5 },
+  { id:"JK-1012", name:"Salsamentaría Don Pedro", password:"donpedro26", phone:"573124455667", bloqueado:false, created_at:"2026-01-09T11:45:00", updated_at:"2026-12-05T17:00:00", inicio_cobro:"2026-01-15", ciclo_dias:30, mensualidad:84000, accent:0 }
+];
+
+var DEFAULT_TEMPLATE = "¡Hola, {comercio}! 👋\nTe saludamos del equipo de Sistema JK.\n\nTe escribimos para recordarte tu mensualidad de {mensualidad}, con próximo cobro el {proximo_cobro}.\nFrecuencia de cobro: {frecuencia}.\n\nSi ya realizaste el pago, comparte el comprobante por este medio. Si tienes alguna duda, ¡estamos para ayudarte! 🙌";
+
+var DEFAULT_REMINDER = "Hola 👋 Te saluda Sistema JK.\n\nRecuerda el cobro de la mensualidad de {comercio}.\nValor: {mensualidad}\nInicio del cobro: {inicio}\nPróximo cobro: {proximo_cobro}\nFrecuencia: {frecuencia}\n\nSi ya realizaste el pago, comparte el comprobante. ¡Gracias por confiar en nosotros!";
+
+var VARIABLES = [
+  { token: "{comercio}", label: "Comercio" },
+  { token: "{telefono}", label: "Teléfono" },
+  { token: "{mensualidad}", label: "Mensualidad" },
+  { token: "{proximo_cobro}", label: "Próximo cobro" },
+  { token: "{frecuencia}", label: "Frecuencia" },
+  { token: "{inicio}", label: "Inicio de cobro" },
+  { token: "{id}", label: "ID del comercio" }
+];
+
+/* --------------------------- Utilidades --------------------------- */
+function esc(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function renderResumen() {
-    const total = comercios.length;
-    const blocked = comercios.filter(c => c.bloqueado).length;
-    const active = total - blocked;
-    const ops = operaciones.length;
-    document.getElementById('adminSummary').innerHTML = `
-        <div class="admin-kpi"><span>Comercios</span><strong>${total}</strong><small>en la plataforma</small></div>
-        <div class="admin-kpi k-active"><span>Activos</span><strong>${active}</strong><small>en servicio</small></div>
-        <div class="admin-kpi k-blocked"><span>Bloqueados</span><strong>${blocked}</strong><small>en pausa</small></div>
-        <div class="admin-kpi"><span>Operaciones</span><strong>${ops}</strong><small>total en plataforma</small></div>
-    `;
+function icon(name, cls) {
+  return '<svg class="ic ' + (cls || "") + '" aria-hidden="true"><use href="#i-' + name + '"></use></svg>';
 }
-function renderComercios() {
-    const grid = document.getElementById('adminGrid');
-    const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
-    const lista = comercios.filter(c => !q ||
-        (c.name || '').toLowerCase().includes(q) ||
-        (c.id || '').toLowerCase().includes(q) ||
-        (c.password || '').toLowerCase().includes(q)
-    );
-    if (lista.length === 0) {
-        grid.innerHTML = '<div class="admin-empty"><i class="fa-solid fa-store"></i><p>No hay comercios que coincidan con la búsqueda.</p></div>';
-        return;
-    }
-    let html = '';
-    lista.forEach(c => {
-        const ops = operaciones.filter(o => o.comercio_id === c.id);
-        const total = ops.reduce((s, o) => s + (Number(o.total) || 0), 0);
-        const inicial = (c.name || 'C').trim().charAt(0).toUpperCase();
-        const logoHtml = c.logo_url
-            ? '<img src="' + c.logo_url + '" alt="Logo">'
-            : '<span>' + inicial + '</span>';
-        const creado = c.created_at ? new Date(c.created_at).toLocaleString('es-CO') : '—';
-        const actualizado = c.updated_at ? new Date(c.updated_at).toLocaleString('es-CO') : '—';
-        const bloqueado = !!c.bloqueado;
-        html += `
-        <div class="admin-card">
-            <div class="admin-card-head">
-                <div class="admin-logo">${logoHtml}</div>
-                <div class="admin-card-title">
-                    <strong>${c.name || '(sin nombre)'}</strong>
-                    <small>ID: ${c.id || '—'}</small>
-                    <span class="admin-status ${bloqueado ? 'blocked' : 'active'}">${bloqueado ? 'Bloqueado' : 'Activo'}</span>
-                </div>
-            </div>
-            <div class="admin-stats">
-                <div class="admin-stat"><span>Operaciones</span><strong>${ops.length}</strong></div>
-                <div class="admin-stat"><span>Total registrado</span><strong>${formatoMoneda(total)}</strong></div>
-            </div>
-            <div class="admin-password-row">
-                <input type="password" class="admin-pass-input" id="pass-${String(c.id).replace(/[^a-zA-Z0-9]/g, '_')}" value="${(c.password || '').replace(/"/g, '&quot;')}" readonly>
-                <button type="button" class="admin-eye" title="Mostrar contraseña" onclick="togglePassword('${String(c.id).replace(/'/g, '\\&#39;')}', this)"><i class="fa-solid fa-eye"></i></button>
-            </div>
-            <div class="admin-meta">
-                <small>Creado: ${creado}</small>
-                <small>Actualizado: ${actualizado}</small>
-            </div>
-            <button type="button" class="admin-block-btn ${bloqueado ? 'unblock' : 'block'}" onclick="toggleBloque('${String(c.id).replace(/'/g, '\\&#39;')}', ${bloqueado ? 'true' : 'false'})">
-                <i class="fa-solid ${bloqueado ? 'fa-unlock' : 'fa-lock'}"></i> ${bloqueado ? 'Desbloquear servicio' : 'Bloquear servicio'}
-            </button>
-        </div>`;
+function waIcon(cls) {
+  return '<svg class="ic-wa ' + (cls || "") + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>';
+}
+function startOfToday() { var d = new Date(); d.setHours(0,0,0,0); return d; }
+function parseLocalDate(iso) { var p = String(iso).split("-").map(function(n){return parseInt(n,10);}); return new Date(p[0], (p[1]||1)-1, p[2]||1); }
+function toISODate(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function addDays(d, days) { var n = new Date(d); n.setDate(n.getDate()+days); return n; }
+function computeNext(inicio, days) {
+  var start = parseLocalDate(inicio), today = startOfToday();
+  if (isNaN(start.getTime()) || !days || days <= 0) return inicio;
+  if (start.getTime() >= today.getTime()) return toISODate(start);
+  var diff = Math.floor((today.getTime() - start.getTime()) / 86400000);
+  var periods = Math.ceil(diff / days);
+  return toISODate(addDays(start, periods * days));
+}
+function daysUntil(iso) { return Math.round((parseLocalDate(iso).getTime() - startOfToday().getTime()) / 86400000); }
+function formatDate(iso) {
+  if (!iso) return "—";
+  var d = String(iso).indexOf("T") > -1 ? new Date(iso) : parseLocalDate(iso);
+  if (isNaN(d.getTime())) return "—";
+  return new Intl.DateTimeFormat("es-CO",{day:"2-digit",month:"short",year:"numeric"}).format(d).replace(/\./g,"");
+}
+function formatDateTime(iso) {
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return "—";
+  return new Intl.DateTimeFormat("es-CO",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(d).replace(/\./g,"");
+}
+function formatCOP(n) {
+  return new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(Number(n)||0);
+}
+function compactCOP(n) {
+  n = Number(n)||0;
+  if (Math.abs(n) >= 1e9) return "$ " + (n/1e9).toFixed(1).replace(".",",") + " B";
+  if (Math.abs(n) >= 1e6) return "$ " + (n/1e6).toFixed(1).replace(".",",") + " M";
+  if (Math.abs(n) >= 1e4) return "$ " + Math.round(n/1000) + " K";
+  return formatCOP(n);
+}
+function formatPhone(phone) {
+  var d = String(phone).replace(/\D/g,"");
+  if (d.length === 12 && d.slice(0,2) === "57") return "+57 " + d.slice(2,5) + " " + d.slice(5,8) + " " + d.slice(8);
+  if (d.length === 10) return "+57 " + d.slice(0,3) + " " + d.slice(3,6) + " " + d.slice(6);
+  return phone;
+}
+function cycleLabel(days) {
+  var found = CYCLES.filter(function(c){ return c.days === Number(days); })[0];
+  return found ? found.label : "Cada " + days + " días";
+}
+function num(n) { return new Intl.NumberFormat("es-CO").format(Number(n)||0); }
+/* --------------------------- Plantillas --------------------------- */
+function fillTemplate(tpl, m) {
+  var next = computeNext(m.inicio_cobro, m.ciclo_dias);
+  var values = {
+    "{comercio}": m.name,
+    "{telefono}": formatPhone(m.phone),
+    "{mensualidad}": formatCOP(m.mensualidad),
+    "{proximo_cobro}": formatDate(next),
+    "{frecuencia}": cycleLabel(m.ciclo_dias),
+    "{inicio}": formatDate(m.inicio_cobro),
+    "{id}": m.id
+  };
+  return Object.keys(values).reduce(function(text, token){ return text.split(token).join(values[token]); }, tpl);
+}
+function waPhone(m) { var d = String(m.phone).replace(/\D/g,""); return d.indexOf("57") === 0 ? d : "57" + d; }
+function waLink(m, tpl) { return "https://wa.me/" + waPhone(m) + "?text=" + encodeURIComponent(fillTemplate(tpl, m)); }
+function googleCalendarLink(m, dateISO, details) {
+  var start = dateISO.replace(/-/g,"");
+  var end = toISODate(addDays(parseLocalDate(dateISO),1)).replace(/-/g,"");
+  var params = new URLSearchParams({
+    action:"TEMPLATE",
+    text:"Cobro de mensualidad · " + m.name,
+    dates: start + "/" + end,
+    details: details,
+    recurrence: "RRULE:FREQ=DAILY;INTERVAL=" + m.ciclo_dias
+  });
+  return "https://calendar.google.com/calendar/render?" + params.toString();
+}
+function escapeICS(v) { return String(v).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n"); }
+function icsStamp(d) { return d.toISOString().replace(/[-:]/g,"").split(".")[0] + "Z"; }
+function downloadICS(m, dateISO, details) {
+  var start = dateISO.replace(/-/g,"");
+  var end = toISODate(addDays(parseLocalDate(dateISO),1)).replace(/-/g,"");
+  var title = "Cobro de mensualidad · " + m.name;
+  var lines = [
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Sistema JK//Panel de Comercios//ES","CALSCALE:GREGORIAN","METHOD:PUBLISH",
+    "BEGIN:VEVENT","UID:" + m.id + "-" + start + "-cobro@sistemajk","DTSTAMP:" + icsStamp(new Date()),
+    "DTSTART;VALUE=DATE:" + start,"DTEND;VALUE=DATE:" + end,
+    "SUMMARY:" + escapeICS(title),"DESCRIPTION:" + escapeICS(details),
+    "RRULE:FREQ=DAILY;INTERVAL=" + m.ciclo_dias,
+    "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:" + escapeICS("Mañana: " + title),"END:VALARM",
+    "BEGIN:VALARM","TRIGGER:-PT0S","ACTION:DISPLAY","DESCRIPTION:" + escapeICS(title),"END:VALARM",
+    "END:VEVENT","END:VCALENDAR"
+  ];
+  var blob = new Blob([lines.join("\r\n")], { type:"text/calendar;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "recordatorio-cobro-" + m.id + ".ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+}
+
+/* ------------------------- Estado y almacenamiento ------------------------- */
+function normalize(data) {
+  if (!Array.isArray(data) || !data.length) return null;
+  var clean = data.filter(function(m){ return m && typeof m === "object" && typeof m.id === "string" && typeof m.name === "string"; })
+    .map(function(m, i) {
+      return {
+        id: m.id, name: m.name,
+        password: typeof m.password === "string" ? m.password : "jk2026",
+        phone: typeof m.phone === "string" ? m.phone : "",
+        bloqueado: !!m.bloqueado,
+        created_at: m.created_at || new Date().toISOString(),
+        updated_at: m.updated_at || new Date().toISOString(),
+        inicio_cobro: m.inicio_cobro || toISODate(startOfToday()),
+        ciclo_dias: Number(m.ciclo_dias) > 0 ? Number(m.ciclo_dias) : 30,
+        mensualidad: Number.isFinite(Number(m.mensualidad)) ? Number(m.mensualidad) : 0,
+        accent: typeof m.accent === "number" && m.accent >= 0 ? m.accent % ACCENTS.length : i % ACCENTS.length
+      };
     });
-    grid.innerHTML = html;
+  return clean.length ? clean : null;
 }
-function togglePassword(id, btn) {
-    const input = document.getElementById('pass-' + String(id).replace(/[^a-zA-Z0-9]/g, '_'));
-    if (!input) return;
-    if (input.type === 'password') {
-        input.type = 'text';
-        btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-    } else {
-        input.type = 'password';
-        btn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+function loadMerchants() {
+  try { var raw = localStorage.getItem(STORE_KEY); if (!raw) return SEED.slice(); return normalize(JSON.parse(raw)) || SEED.slice(); }
+  catch (e) { return SEED.slice(); }
+}
+function loadTemplate() {
+  try { return localStorage.getItem(TEMPLATE_KEY) || DEFAULT_TEMPLATE; } catch (e) { return DEFAULT_TEMPLATE; }
+}
+function saveMerchants() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(merchants)); } catch (e) {}
+}
+function saveTemplate(value) {
+  template = value;
+  try { localStorage.setItem(TEMPLATE_KEY, value); } catch (e) {}
+}
+
+var merchants = loadMerchants();
+var template = loadTemplate();
+var state = { query: "", filter: "todos", statsRange: 90, pendingBlock: null, passwordTarget: null };
+var lastSync = new Date();
+
+/* ------------------------- Operaciones (uso de la plataforma) ------------------------- */
+function mulberry32(seed) {
+  var a = seed;
+  return function() {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+var OPERATION_TYPES = [
+  { type:"Venta", weight:.61 }, { type:"Recaudo", weight:.24 },
+  { type:"Abono", weight:.11 }, { type:"Devolución", weight:.04 }
+];
+var TYPE_COLORS = { Venta:"#12d8c4", Recaudo:"#60a5fa", Abono:"#a78bfa", "Devolución":"#fb7185" };
+var OPERATIONS = (function() {
+  var random = mulberry32(20260207);
+  var today = startOfToday();
+  var list = [];
+  SEED.forEach(function(m, index) {
+    var count = Math.floor(170 + random()*760 + index*12);
+    for (var i = 0; i < count; i++) {
+      var roll = random(), acc = 0, type = "Venta";
+      for (var t = 0; t < OPERATION_TYPES.length; t++) {
+        acc += OPERATION_TYPES[t].weight;
+        if (roll <= acc) { type = OPERATION_TYPES[t].type; break; }
+      }
+      var daysAgo = Math.floor(Math.pow(random(), 1.18) * 238);
+      var created = addDays(today, -daysAgo);
+      created.setHours(Math.floor(random()*13)+8, Math.floor(random()*60), 0, 0);
+      var base = type === "Recaudo" ? 15000 + random()*180000
+        : type === "Abono" ? 8000 + random()*60000
+        : type === "Devolución" ? 5000 + random()*45000
+        : 12000 + random()*280000;
+      list.push({ id:"op-" + m.id + "-" + i, comercio_id:m.id, total: Math.round(base/100)*100, tipo_operacion:type, created_at:created.toISOString() });
     }
+  });
+  return list.sort(function(a,b){ return b.created_at.localeCompare(a.created_at); });
+})();
+
+function opsFor(id) {
+  var count = 0, total = 0;
+  for (var i = 0; i < OPERATIONS.length; i++) {
+    if (OPERATIONS[i].comercio_id === id) { count++; total += OPERATIONS[i].total; }
+  }
+  return { count: count, total: total };
 }
-function formatoMoneda(num) {
-    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(Number(num) || 0);
+var TOTALS = (function() {
+  var blocked = merchants.filter(function(m){ return m.bloqueado; }).length;
+  return { total: merchants.length, blocked: blocked, active: merchants.length - blocked, ops: OPERATIONS.length };
+})();
+
+/* ------------------------------ Render ------------------------------ */
+var $ = function(sel, root) { return (root || document).querySelector(sel); };
+var $$ = function(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+function statusBadge(blocked) {
+  return '<span class="status ' + (blocked ? "blocked" : "active") + '"><i></i>' + (blocked ? "Bloqueado" : "Activo") + '</span>';
 }
-async function toggleBloque(id, bloqueado) {
-    if (adminState.bloqueando) return;
-    bloqueado = !bloqueado;
-    if (!confirm(`¿${bloqueado ? 'Bloquear' : 'Desbloquear'} el servicio del comercio "${id}"?`)) return;
-    adminState.bloqueando = id;
-    try {
-        const { error } = await sg.from('comercio').update({ bloqueado: bloqueado, updated_at: new Date().toISOString() }).eq('id', id);
-        if (error) throw error;
-        mostrarToastExito('Servicio ' + (bloqueado ? 'bloqueado' : 'desbloqueado') + ' correctamente.');
-        await cargar();
-    } catch (e) {
-        mostrarToastError('Error: ' + e.message);
-    } finally {
-        adminState.bloqueando = null;
+function nextBadge(m) {
+  var next = computeNext(m.inicio_cobro, m.ciclo_dias);
+  var days = daysUntil(next);
+  if (days < 0 || days > 7) return "";
+  return '<span class="soon">' + (days === 0 ? "Hoy" : days + " d") + '</span>';
+}
+
+function cardHTML(m) {
+  var acc = ACCENTS[(m.accent || 0) % ACCENTS.length];
+  var stats = opsFor(m.id);
+  var initial = (m.name || "C").trim().charAt(0).toUpperCase();
+  var next = computeNext(m.inicio_cobro, m.ciclo_dias);
+  var cycleOptions = CYCLES.map(function(c) {
+    return '<option value="' + c.days + '"' + (c.days === Number(m.ciclo_dias) ? " selected" : "") + '>' + c.label + '</option>';
+  }).join("");
+  return '' +
+  '<article class="card" data-card="' + esc(m.id) + '">' +
+    '<div class="card-head">' +
+      '<div class="logo" style="background:' + acc.grad + ';color:' + acc.ink + '">' + esc(initial) + '</div>' +
+      '<div class="head-main">' +
+        '<div class="name-row"><h3 title="' + esc(m.name) + '">' + esc(m.name) + '</h3>' + statusBadge(m.bloqueado) + '</div>' +
+        '<p class="meta-id">ID: ' + esc(m.id) + '</p>' +
+      '</div>' +
+    '</div>' +
+    '<button type="button" class="contact" data-action="contact" data-id="' + esc(m.id) + '" aria-label="Escribir por WhatsApp a ' + esc(m.name) + '">' +
+      '<span class="contact-num">' + waIcon() + '<span>' + esc(formatPhone(m.phone)) + '</span></span>' +
+      '<span class="contact-cta">Contactar</span>' +
+    '</button>' +
+    '<div class="mini-stats">' +
+      '<div class="mini"><p>' + icon("receipt") + ' Operaciones</p><strong>' + num(stats.count) + '</strong></div>' +
+      '<div class="mini"><p>' + icon("wallet") + ' Total registrado</p><strong title="' + esc(formatCOP(stats.total)) + '">' + compactCOP(stats.total) + '</strong></div>' +
+    '</div>' +
+    '<div class="billing">' +
+      '<div class="billing-head"><p>' + icon("calendar") + ' Cobro de mensualidad</p><strong title="' + esc(formatCOP(m.mensualidad)) + '">' + compactCOP(m.mensualidad) + '</strong></div>' +
+      '<div class="fields">' +
+        '<label class="field"><span>Fecha de inicio</span><input type="date" value="' + esc(m.inicio_cobro) + '" data-billing-start data-id="' + esc(m.id) + '" aria-label="Fecha de inicio de cobro de ' + esc(m.name) + '"></label>' +
+        '<label class="field"><span>Cobrar cada</span><select data-billing-cycle data-id="' + esc(m.id) + '" aria-label="Frecuencia de cobro de ' + esc(m.name) + '">' + cycleOptions + '</select></label>' +
+      '</div>' +
+      '<div class="next" data-next-row>' +
+        '<div><span class="next-lbl">Próximo cobro</span><p class="next-line"><span class="next-date">' + esc(formatDate(next)) + '</span>' + nextBadge(m) + '</p></div>' +
+        '<button type="button" class="remember" data-action="reminder" data-id="' + esc(m.id) + '" title="Agregar recordatorio de cobro al calendario">' + icon("bell") + ' Recordar</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="passrow">' + icon("key") +
+      '<input type="password" value="' + esc(m.password) + '" readonly data-pass-input="' + esc(m.id) + '" aria-label="Contraseña de ' + esc(m.name) + '">' +
+      '<button type="button" class="eye" data-action="reveal" data-id="' + esc(m.id) + '" aria-label="Mostrar contraseña" title="Mostrar contraseña">' + icon("eye") + '</button>' +
+      '<button type="button" class="change" data-action="password" data-id="' + esc(m.id) + '" title="Cambiar contraseña del comercio">' + icon("pencil") + ' Cambiar</button>' +
+    '</div>' +
+    '<div class="meta-row"><span>Creado: ' + esc(formatDate(m.created_at)) + '</span><span>Actualizado: ' + esc(formatDate(m.updated_at)) + '</span></div>' +
+    '<button type="button" class="block-btn ' + (m.bloqueado ? "unblock" : "block") + '" data-action="block" data-id="' + esc(m.id) + '">' +
+      (m.bloqueado ? icon("unlock") + " Desbloquear servicio" : icon("lock") + " Bloquear servicio") +
+    '</button>' +
+  '</article>';
+}
+
+function filteredMerchants() {
+  var term = state.query.trim().toLowerCase();
+  var digits = term.replace(/\D/g, "");
+  return merchants.filter(function(m) {
+    if (state.filter === "activos" && m.bloqueado) return false;
+    if (state.filter === "bloqueados" && !m.bloqueado) return false;
+    if (!term) return true;
+    var phoneMatch = digits.length > 0 && (m.phone.replace(/\D/g,"").indexOf(digits) > -1 || formatPhone(m.phone).toLowerCase().indexOf(term) > -1);
+    return m.name.toLowerCase().indexOf(term) > -1 ||
+      m.id.toLowerCase().indexOf(term) > -1 ||
+      m.password.toLowerCase().indexOf(term) > -1 ||
+      phoneMatch;
+  });
+}
+
+function renderGrid() {
+  var list = filteredMerchants();
+  var grid = $("#grid");
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("search-x") +
+      '<p>No hay comercios que coincidan con la búsqueda.</p>' +
+      '<button type="button" data-action="clear-filters">Limpiar filtros</button></div>';
+  } else {
+    grid.innerHTML = list.map(cardHTML).join("");
+  }
+  $("#resultCount").textContent = list.length + " de " + merchants.length;
+  $("#visibleCount").textContent = list.length + " visibles";
+}
+function renderCounts() {
+  $("#kpiTotal").textContent = num(TOTALS.total);
+  $("#kpiActive").textContent = num(TOTALS.active);
+  $("#kpiBlocked").textContent = num(TOTALS.blocked);
+  $("#kpiOps").textContent = num(TOTALS.ops);
+  $("#brandCount").textContent = TOTALS.total + " comercios";
+  $("#fCountAll").textContent = TOTALS.total;
+  $("#fCountActive").textContent = TOTALS.active;
+  $("#fCountBlocked").textContent = TOTALS.blocked;
+}
+function renderFooter() {
+  $("#footUpdated").textContent = "Actualizado el " + formatDateTime(lastSync.toISOString()) + " · " + merchants.length + " comercios · " + num(OPERATIONS.length) + " operaciones";
+}
+function renderAll() {
+  TOTALS = (function() {
+    var blocked = merchants.filter(function(m){ return m.bloqueado; }).length;
+    return { total: merchants.length, blocked: blocked, active: merchants.length - blocked, ops: OPERATIONS.length };
+  })();
+  renderCounts();
+  renderGrid();
+  renderFooter();
+}
+
+/* ------------------------------ Toasts ------------------------------ */
+function toast(kind, message, detail) {
+  var host = $("#toasts");
+  var id = "t" + Date.now() + Math.random().toString(16).slice(2);
+  var iconName = kind === "success" ? "check-circle" : kind === "error" ? "x-circle" : "info";
+  var el = document.createElement("div");
+  el.className = "toast " + kind;
+  el.setAttribute("role", "status");
+  el.id = id;
+  el.innerHTML = icon(iconName) + '<div class="toast-txt"><b>' + esc(message) + '</b>' +
+    (detail ? "<small>" + esc(detail) + "</small>" : "") + '</div>' +
+    '<button type="button" class="toast-x" data-action="dismiss-toast" data-target="' + id + '" aria-label="Cerrar alerta">' + icon("x") + '</button>';
+  host.appendChild(el);
+  while (host.children.length > 2) host.removeChild(host.firstElementChild);
+  setTimeout(function() {
+    var current = document.getElementById(id);
+    if (!current) return;
+    current.style.transition = "opacity .3s, transform .3s";
+    current.style.opacity = "0";
+    current.style.transform = "translateY(-8px)";
+    setTimeout(function(){ if (current.parentNode) current.remove(); }, 320);
+  }, 5200);
+}
+
+/* ------------------------------ Modales ------------------------------ */
+function openModal(opts) {
+  var root = $("#modalRoot");
+  root.innerHTML = '' +
+  '<div class="overlay" data-overlay>' +
+    '<div class="modal ' + (opts.size || "") + '" role="dialog" aria-modal="true" aria-label="' + esc(opts.title) + '">' +
+      '<div class="modal-head">' +
+        (opts.icon ? '<div class="modal-ic tone-' + (opts.tone || "mint") + '">' + icon(opts.icon) + '</div>' : "") +
+        '<div class="modal-main"><h2>' + esc(opts.title) + '</h2>' + (opts.subtitle ? '<div class="modal-sub">' + opts.subtitle + '</div>' : "") + '</div>' +
+        '<button type="button" class="x" data-action="close-modal" aria-label="Cerrar">' + icon("x") + '</button>' +
+      '</div>' +
+      '<div class="modal-body">' + opts.body + '</div>' +
+      (opts.footer ? '<div class="modal-foot">' + opts.footer + '</div>' : "") +
+    '</div>' +
+  '</div>';
+  document.body.style.overflow = "hidden";
+  var first = root.querySelector("input:not([readonly]), textarea, select");
+  if (first) setTimeout(function(){ first.focus(); }, 60);
+}
+function closeModal() {
+  $("#modalRoot").innerHTML = "";
+  document.body.style.overflow = "";
+  state.pendingBlock = null;
+}
+function getMerchant(id) {
+  return merchants.filter(function(m){ return m.id === id; })[0] || null;
+}
+function waCustomLink(phone, text) {
+  var d = String(phone).replace(/\D/g, "");
+  if (d.indexOf("57") !== 0) d = "57" + d;
+  return "https://wa.me/" + d + "?text=" + encodeURIComponent(text);
+}
+
+/* -------------------- MODAL: cambiar contraseña -------------------- */
+function generatePassword() {
+  var letters = "abcdefghijkmnopqrstuvwxyz";
+  var digits = "23456789";
+  var symbols = "!@#*";
+  var pool = letters + digits + symbols;
+  var out = "";
+  var values = new Uint32Array(10);
+  if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(values);
+  else for (var k = 0; k < 10; k++) values[k] = Math.floor(Math.random() * 4294967295);
+  for (var i = 0; i < values.length; i++) {
+    if (i === 0) out += letters[values[i] % letters.length].toUpperCase();
+    else if (i === 1) out += digits[values[i] % digits.length];
+    else out += pool[values[i] % pool.length];
+  }
+  return out;
+}
+function passwordStrength(value) {
+  if (!value) return { score: 0, label: "Sin definir" };
+  var variety = [/[a-z]/,/[A-Z]/,/[0-9]/,/[^a-zA-Z0-9]/].filter(function(rx){ return rx.test(value); }).length;
+  var score = Math.min(4, variety + (value.length >= 10 ? 1 : 0));
+  return { score: score, label: ["Sin definir","Básica","Aceptable","Buena","Muy fuerte"][score] };
+}
+function updatePwStrength() {
+  var value = ($("#pwNew") || {}).value || "";
+  var result = passwordStrength(value);
+  $$("#pwStrength i").forEach(function(bar, index) {
+    bar.className = index < result.score ? "on " + (result.score <= 2 ? "weak" : "good") : "";
+  });
+  var label = $("#pwStrengthLabel");
+  if (label) label.innerHTML = 'Seguridad: <b>' + result.label + '</b>';
+}
+function openPasswordModal(id) {
+  var m = getMerchant(id); if (!m) return;
+  var text = "Hola, " + m.name + ". Te compartimos tu contraseña de acceso al Sistema JK: " + m.password;
+  openModal({
+    title: "Cambiar contraseña del comercio",
+    subtitle: '<b>' + esc(m.name) + '</b> <span class="sep">·</span> ' + esc(m.id),
+    icon: "key", tone: "mint", size: "sm",
+    body: '' +
+      '<div style="display:flex;flex-direction:column;gap:14px">' +
+        '<div class="mpane"><div style="min-width:0"><p class="mpane-lbl">Contraseña actual</p><p class="mpane-val">' + esc(m.password) + '</p></div>' +
+          '<a class="wa-chip" target="_blank" rel="noreferrer" href="' + waCustomLink(m.phone, text) + '">' + waIcon() + ' ' + esc(formatPhone(m.phone)) + '</a>' +
+        '</div>' +
+        '<form id="pwForm" novalidate style="display:flex;flex-direction:column;gap:14px">' +
+          '<label class="form-group"><span class="form-lbl">Nueva contraseña</span>' +
+            '<div class="inputwrap">' + icon("key") +
+              '<input id="pwNew" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">' +
+              '<button type="button" class="eye-btn" data-action="toggle-field" data-target="pwNew" aria-label="Mostrar contraseña">' + icon("eye") + '</button>' +
+              '<button type="button" class="gen-btn" data-action="generate-password" title="Generar contraseña segura">' + icon("wand") + ' Generar</button>' +
+            '</div>' +
+            '<div class="strength" id="pwStrength"><i></i><i></i><i></i><i></i></div>' +
+            '<p class="strength-lbl" id="pwStrengthLabel">Seguridad: <b>Sin definir</b></p>' +
+          '</label>' +
+          '<label class="form-group"><span class="form-lbl">Confirmar contraseña</span>' +
+            '<div class="inputwrap">' + icon("shield-check") +
+              '<input id="pwConfirm" type="password" placeholder="Repite la contraseña" autocomplete="new-password">' +
+              '<button type="button" class="eye-btn" data-action="toggle-field" data-target="pwConfirm" aria-label="Mostrar confirmación">' + icon("eye") + '</button>' +
+            '</div>' +
+          '</label>' +
+          '<div id="pwError" hidden></div>' +
+          '<div class="note mint">' + icon("shield-check") + '<div>Al guardar, el cliente podrá iniciar sesión de inmediato con la nueva contraseña. Compártela por su botón de WhatsApp antes de que intente ingresar.</div></div>' +
+        '</form>' +
+      '</div>',
+    footer: '<div class="foot-row">' +
+      '<button type="button" class="mbtn mbtn-ghost" data-action="close-modal">Cancelar</button>' +
+      '<button type="submit" form="pwForm" class="mbtn mbtn-mint">' + icon("shield-check") + ' Guardar nueva contraseña</button>' +
+    '</div>'
+  });
+}
+function submitPassword(event) {
+  event.preventDefault();
+  var id = state.passwordTarget;
+  var m = getMerchant(id);
+  if (!m) return;
+  var pass = $("#pwNew").value;
+  var confirmValue = $("#pwConfirm").value;
+  var error = $("#pwError");
+  var showError = function(message) {
+    error.hidden = false;
+    error.className = "alert-error";
+    error.textContent = message;
+  };
+  if (pass.length < 6) { showError("La contraseña debe tener al menos 6 caracteres."); $("#pwNew").focus(); return; }
+  if (pass !== confirmValue) { showError("Las contraseñas no coinciden."); $("#pwConfirm").focus(); return; }
+  merchants = merchants.map(function(item) {
+    if (item.id !== id) return item;
+    return Object.assign({}, item, { password: pass, updated_at: new Date().toISOString() });
+  });
+  saveMerchants();
+  closeModal();
+  renderAll();
+  toast("success", "Contraseña actualizada correctamente", m.name + " · Ya puede iniciar sesión con la nueva contraseña.");
+}
+
+/* -------------------- MODAL: confirmar bloqueo -------------------- */
+function openBlockModal(id) {
+  var m = getMerchant(id); if (!m) return;
+  var willBlock = !m.bloqueado;
+  state.pendingBlock = id;
+  openModal({
+    title: willBlock ? "¿Bloquear este servicio?" : "¿Desbloquear este servicio?",
+    subtitle: "Confirma la acción para continuar.",
+    icon: willBlock ? "lock" : "unlock",
+    tone: willBlock ? "danger" : "success",
+    size: "sm",
+    body: '' +
+      '<div style="display:flex;flex-direction:column;gap:14px">' +
+        '<div class="merchant-line"><div class="who"><strong>' + esc(m.name) + '</strong><small>' + esc(m.id) + ' · ' + esc(formatPhone(m.phone)) + '</small></div>' + statusBadge(m.bloqueado) + '</div>' +
+        '<p class="mtext">' + (willBlock
+          ? "El comercio perderá el acceso a la plataforma y no podrá registrar nuevas operaciones hasta que vuelvas a habilitar el servicio."
+          : "El comercio recuperará el acceso de inmediato y podrá volver a iniciar sesión y registrar operaciones.") + '</p>' +
+        (willBlock
+          ? '<div class="note amber">' + icon("alert") + '<div>El historial de operaciones y la configuración de cobro se conservan intactos.</div></div>'
+          : '<div class="note mint">' + icon("shield-check") + '<div>Verifica que el cliente haya resuelto el motivo del bloqueo antes de reactivar el servicio.</div></div>') +
+      '</div>',
+    footer: '<div class="foot-row">' +
+      '<button type="button" class="mbtn mbtn-ghost" data-action="close-modal">Cancelar</button>' +
+      '<button type="button" class="mbtn ' + (willBlock ? "mbtn-danger" : "mbtn-green") + '" data-action="confirm-block" data-id="' + esc(m.id) + '">' +
+        (willBlock ? icon("lock") + " Sí, bloquear servicio" : icon("unlock") + " Sí, desbloquear servicio") +
+      '</button>' +
+    '</div>'
+  });
+}
+function confirmBlock(id) {
+  var m = getMerchant(id); if (!m) return;
+  var willBlock = !m.bloqueado;
+  merchants = merchants.map(function(item) {
+    if (item.id !== id) return item;
+    return Object.assign({}, item, { bloqueado: willBlock, updated_at: new Date().toISOString() });
+  });
+  saveMerchants();
+  closeModal();
+  renderAll();
+  toast(willBlock ? "error" : "success",
+    willBlock ? "Servicio bloqueado correctamente" : "Servicio desbloqueado correctamente",
+    willBlock ? m.name + " no podrá ingresar hasta que vuelvas a habilitarlo." : m.name + " recuperó el acceso a la plataforma.");
+}
+
+/* -------------------- MODAL: recordatorio de cobro -------------------- */
+function openReminderModal(id) {
+  var m = getMerchant(id); if (!m) return;
+  var next = computeNext(m.inicio_cobro, m.ciclo_dias);
+  var details = fillTemplate(DEFAULT_REMINDER, m);
+  var isApple = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  openModal({
+    title: "Recordatorio de cobro",
+    subtitle: esc(m.name) + " · " + esc(formatCOP(m.mensualidad)) + " · " + esc(cycleLabel(m.ciclo_dias)),
+    icon: "bell", tone: "mint", size: "",
+    body: '' +
+      '<div style="display:flex;flex-direction:column;gap:13px">' +
+        '<div class="mgrid">' +
+          '<div class="mstat"><span>Mensualidad</span><strong class="mint">' + esc(formatCOP(m.mensualidad)) + '</strong></div>' +
+          '<div class="mstat"><span>Frecuencia</span><strong>' + esc(cycleLabel(m.ciclo_dias)) + '</strong></div>' +
+          '<div class="mstat" style="grid-column:span 2"><span>Inicio del cobro</span><strong>' + esc(formatDate(m.inicio_cobro)) + '</strong></div>' +
+        '</div>' +
+        '<label class="mfield"><span>Fecha del recordatorio</span><input type="date" id="remDate" value="' + esc(next) + '"><small class="help">Se repite automáticamente cada ' + esc(m.ciclo_dias) + ' días.</small></label>' +
+        '<label class="mfield"><span class="form-lbl row" style="margin-bottom:6px">Mensaje del recordatorio <small id="remCount">' + details.length + ' caracteres</small></span>' +
+          '<textarea id="remText" rows="7">' + esc(details) + '</textarea></label>' +
+        '<div class="note sky">' + icon("info") + '<div>El texto anterior se guarda dentro del evento y en sus avisos (1 día antes y el mismo día). En iPhone se abrirá la app Calendario; en Android puedes usar Google Calendar o el calendario instalado.</div></div>' +
+      '</div>',
+    footer: '<div class="foot-row">' +
+      '<button type="button" class="mbtn mbtn-ghost" data-action="close-modal">Cerrar</button>' +
+      '<button type="button" class="mbtn mbtn-white" data-action="reminder-google" data-id="' + esc(m.id) + '">' + icon("external") + ' Google Calendar</button>' +
+      '<button type="button" class="mbtn mbtn-mint" data-action="reminder-ics" data-id="' + esc(m.id) + '">' + icon("calendar-plus") + ' ' + (isApple ? "Abrir Calendario de iPhone" : "Abrir calendario del teléfono") + '</button>' +
+    '</div>'
+  });
+  var dateInput = $("#remDate");
+  if (dateInput) dateInput.addEventListener("change", function() { updateReminderButtons(); });
+  updateReminderButtons();
+}
+function updateReminderButtons() {
+  var date = ($("#remDate") || {}).value;
+  $$('[data-action="reminder-google"],[data-action="reminder-ics"]').forEach(function(btn) {
+    btn.disabled = !date;
+  });
+}
+function reminderPayload(id) {
+  var m = getMerchant(id);
+  var date = ($("#remDate") || {}).value;
+  var text = ($("#remText") || {}).value || "";
+  if (!m || !date) { toast("error", "Selecciona una fecha válida", "El recordatorio necesita una fecha para poder guardarse."); return null; }
+  return { merchant: m, date: date, text: text };
+}
+function reminderICS(id) {
+  var data = reminderPayload(id); if (!data) return;
+  downloadICS(data.merchant, data.date, data.text);
+  closeModal();
+  toast("info", "Recordatorio listo para tu calendario", "Abre el archivo .ics descargado y pulsa “Añadir” para guardarlo en tu calendario.");
+}
+function reminderGoogle(id) {
+  var data = reminderPayload(id); if (!data) return;
+  window.open(googleCalendarLink(data.merchant, data.date, data.text), "_blank", "noopener,noreferrer");
+  closeModal();
+  toast("info", "Abriendo Google Calendar", "Guarda el evento recurrente en tu cuenta.");
+}
+
+/* -------------------- MODAL: mensaje de WhatsApp -------------------- */
+function previewMerchant() {
+  var active = merchants.filter(function(m){ return !m.bloqueado; })[0];
+  return active || merchants[0] || SEED[0];
+}
+function openTemplateModal() {
+  var preview = previewMerchant();
+  openModal({
+    title: "Mensaje predeterminado de WhatsApp",
+    subtitle: "Este texto se enviará al pulsar el botón de contacto de cada comercio.",
+    icon: "message", tone: "success", size: "xl",
+    body: '' +
+      '<div class="wa-grid">' +
+        '<div style="min-width:0">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">' +
+            '<p class="form-lbl" style="margin:0">Mensaje organizado</p><p class="help" style="margin:0" id="waCount">' + template.length + ' caracteres</p>' +
+          '</div>' +
+          '<textarea id="waTpl" class="wa-text" spellcheck="false">' + esc(template) + '</textarea>' +
+          '<div style="margin-top:10px"><p class="form-lbl" style="margin:0;color:var(--dim)">Insertar dato del comercio</p><div class="chips">' +
+            VARIABLES.map(function(v){ return '<button type="button" class="chip" data-action="insert-token" data-token="' + esc(v.token) + '" title="Insertar ' + esc(v.label) + '">' + esc(v.token) + '</button>'; }).join("") +
+          '</div></div>' +
+          '<div class="note mint" style="margin-top:12px">' + icon("shield-check") + '<div>Puedes personalizar el orden y los datos. WhatsApp abrirá el chat con el mensaje ya escrito, listo para enviar o editar.</div></div>' +
+        '</div>' +
+        '<div style="min-width:0">' +
+          '<p class="form-lbl">Vista previa</p>' +
+          '<div class="chat">' +
+            '<div class="chat-top"><div class="chat-av">JK</div><div class="chat-who"><strong>Sistema JK</strong><small id="waTarget">Para: ' + esc(preview.name) + '</small></div><span class="chat-online">en línea</span></div>' +
+            '<div class="chat-body"><div class="bubble"><p id="waPreview">' + esc(fillTemplate(template, preview)) + '</p><time id="waClock">' + clockNow() + ' ✓✓</time></div></div>' +
+            '<div class="chat-foot"><div class="chat-input"></div><div class="chat-send">' + waIcon() + '</div></div>' +
+          '</div>' +
+          '<div class="preview-target"><span>Se enviará a</span><strong>' + esc(preview.name) + '</strong><small>' + esc(formatCOP(preview.mensualidad)) + ' · ' + esc(preview.phone) + '</small></div>' +
+        '</div>' +
+      '</div>',
+    footer: '<div class="foot-row split">' +
+      '<button type="button" class="mbtn mbtn-ghost" data-action="reset-template">' + icon("rotate") + ' Restablecer mensaje</button>' +
+      '<div class="foot-row" style="margin:0">' +
+        '<button type="button" class="mbtn mbtn-ghost" data-action="close-modal">Cancelar</button>' +
+        '<button type="button" class="mbtn mbtn-green" data-action="save-template">' + icon("save") + ' Guardar mensaje</button>' +
+      '</div>' +
+    '</div>'
+  });
+}
+function clockNow() {
+  return new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
+}
+function updateTemplatePreview() {
+  var area = $("#waTpl"); if (!area) return;
+  var value = area.value;
+  $("#waCount").textContent = value.length + " caracteres";
+  $("#waPreview").textContent = value.trim() ? fillTemplate(value, previewMerchant()) : "Escribe tu mensaje aquí…";
+  $("#waClock").textContent = clockNow() + " ✓✓";
+}
+function insertToken(token) {
+  var area = $("#waTpl"); if (!area) return;
+  var start = area.selectionStart == null ? area.value.length : area.selectionStart;
+  var end = area.selectionEnd == null ? area.value.length : area.selectionEnd;
+  area.value = area.value.slice(0, start) + token + area.value.slice(end);
+  area.focus();
+  area.setSelectionRange(start + token.length, start + token.length);
+  updateTemplatePreview();
+}
+function saveTemplateValue() {
+  var area = $("#waTpl"); if (!area) return;
+  var value = area.value;
+  if (!value.trim()) { toast("error", "El mensaje no puede quedar vacío", "Escribe el texto que quieres enviar por WhatsApp."); return; }
+  saveTemplate(value);
+  closeModal();
+  toast("success", "Mensaje de WhatsApp actualizado", "Se usará en el botón de contacto de todos los comercios.");
+}
+
+/* -------------------- PANEL: estadísticas generales -------------------- */
+function buildStats(days) {
+  var from = addDays(startOfToday(), -days).getTime();
+  var inRange = OPERATIONS.filter(function(op){ return new Date(op.created_at).getTime() >= from; });
+  var volume = inRange.reduce(function(sum, op){ return sum + op.total; }, 0);
+  var totalOps = inRange.length;
+  var avgTicket = totalOps ? Math.round(volume / totalOps) : 0;
+
+  var months = [];
+  var base = new Date();
+  for (var i = 5; i >= 0; i--) {
+    var d = new Date(base.getFullYear(), base.getMonth() - i, 1);
+    months.push({
+      key: d.getFullYear() + "-" + d.getMonth(),
+      label: new Intl.DateTimeFormat("es-CO",{month:"short"}).format(d).replace(/\./g,""),
+      full: new Intl.DateTimeFormat("es-CO",{month:"long",year:"numeric"}).format(d),
+      count: 0, volume: 0
+    });
+  }
+  var monthIndex = {};
+  months.forEach(function(m, idx){ monthIndex[m.key] = idx; });
+  OPERATIONS.forEach(function(op) {
+    var d = new Date(op.created_at);
+    var idx = monthIndex[d.getFullYear() + "-" + d.getMonth()];
+    if (idx === undefined) return;
+    months[idx].count++;
+    months[idx].volume += op.total;
+  });
+
+  var types = Object.keys(TYPE_COLORS).map(function(type) {
+    var subset = inRange.filter(function(op){ return op.tipo_operacion === type; });
+    return {
+      type: type, count: subset.length,
+      total: subset.reduce(function(sum, op){ return sum + op.total; }, 0),
+      color: TYPE_COLORS[type]
+    };
+  });
+
+  var top = merchants.map(function(m) {
+    var subset = inRange.filter(function(op){ return op.comercio_id === m.id; });
+    var value = subset.reduce(function(sum, op){ return sum + op.total; }, 0);
+    return { merchant: m, operations: subset.length, volume: value, avg: subset.length ? Math.round(value/subset.length) : 0, last: subset[0] ? subset[0].created_at : "" };
+  }).sort(function(a,b){ return b.volume - a.volume; }).slice(0,6);
+
+  var names = {};
+  merchants.forEach(function(m){ names[m.id] = m.name; });
+  var recent = inRange.slice(0,6).map(function(op) {
+    return { id:op.id, merchant: names[op.comercio_id] || "Comercio", type:op.tipo_operacion, total:op.total, date:op.created_at };
+  });
+
+  var activeMerchants = merchants.filter(function(m) {
+    return !m.bloqueado && inRange.some(function(op){ return op.comercio_id === m.id; });
+  }).length;
+
+  var now = startOfToday().getTime();
+  var sumBetween = function(a, b) {
+    return OPERATIONS.reduce(function(sum, op) {
+      var t = new Date(op.created_at).getTime();
+      return t >= a && t < b ? sum + op.total : sum;
+    }, 0);
+  };
+  var last30 = sumBetween(now - 30*86400000, now + 86400000);
+  var prev30 = sumBetween(now - 60*86400000, now - 30*86400000);
+  var growth30 = prev30 ? ((last30 - prev30) / prev30) * 100 : 0;
+
+  return {
+    totalOps: totalOps, volume: volume, avgTicket: avgTicket,
+    activeMerchants: activeMerchants, growth30: growth30,
+    series: months, types: types, top: top, recent: recent
+  };
+}
+
+function renderStatsBody() {
+  var host = $("#statsBody"); if (!host) return;
+  var s = buildStats(state.statsRange);
+  var maxCount = Math.max.apply(null, s.series.map(function(x){ return x.count; }).concat([1]));
+  var maxVolume = Math.max.apply(null, s.top.map(function(x){ return x.volume; }).concat([1]));
+  var totalTyped = s.types.reduce(function(sum,t){ return sum + t.count; },0) || 1;
+  var currentMonth = s.series[s.series.length-1];
+  var growth = s.growth30;
+  var growthText = (growth >= 0 ? "+" : "") + growth.toFixed(1).replace(".",",") + "%";
+
+  var acc = 0;
+  var donut = s.types.map(function(t) {
+    var pct = (t.count / totalTyped) * 100;
+    var seg = '<circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="' + t.color + '" stroke-width="6" stroke-dasharray="' + pct.toFixed(2) + ' ' + (100-pct).toFixed(2) + '" stroke-dashoffset="' + (25 - acc).toFixed(2) + '"></circle>';
+    acc += pct;
+    return seg;
+  }).join("");
+
+  var ranges = [30,90,180].map(function(d) {
+    return '<button type="button" class="range ' + (state.statsRange === d ? "active" : "") + '" data-action="stats-range" data-days="' + d + '">' + d + ' días</button>';
+  }).join("");
+
+  var kpis = [
+    { label:"Operaciones", value:num(s.totalOps), detail:"Últimos " + state.statsRange + " días", icon:"activity", cls:"mint" },
+    { label:"Volumen gestionado", value:compactCOP(s.volume), detail:"Ticket promedio " + formatCOP(s.avgTicket), icon:"wallet", cls:"sky" },
+    { label:"Comercios activos", value:String(s.activeMerchants), detail:"de " + merchants.length + " registrados", icon:"store", cls:"green" },
+    { label:"Variación mensual", value:growthText, detail:"30 días vs. 30 previos", icon:growth >= 0 ? "arrow-up" : "arrow-down", cls:growth >= 0 ? "green" : "red", down:growth < 0 }
+  ].map(function(k) {
+    var iconStyle = k.cls === "mint" ? "color:var(--mint);border-color:rgba(18,216,196,.25);background:rgba(18,216,196,.1)"
+      : k.cls === "sky" ? "color:#7dd3fc;border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.1)"
+      : k.cls === "red" ? "color:#fda4af;border-color:rgba(251,113,133,.25);background:rgba(251,113,133,.1)"
+      : "color:#6ee7b7;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.1)";
+    return '<div class="skpi"><div class="skpi-head"><span>' + k.label + '</span><span class="skpi-ic" style="' + iconStyle + '">' + icon(k.icon) + '</span></div>' +
+      '<strong class="' + (k.down ? "down" : "") + '" title="' + esc(k.value) + '">' + esc(k.value) + '</strong><small>' + esc(k.detail) + '</small></div>';
+  }).join("");
+
+  var bars = s.series.map(function(m, i) {
+    var h = Math.max(4, Math.round((m.count/maxCount)*100));
+    var now = i === s.series.length - 1;
+    return '<div class="barcol ' + (now ? "now" : "") + '" title="' + esc(m.full + ": " + num(m.count) + " operaciones · " + formatCOP(m.volume)) + '">' +
+      '<span class="barval">' + esc(new Intl.NumberFormat("es-CO",{notation:"compact"}).format(m.count)) + '</span>' +
+      '<div class="barwrap"><div class="bar ' + (now ? "now" : "") + '" style="height:' + h + '%;animation-delay:' + (i*60) + 'ms"></div></div>' +
+      '<span class="barlbl">' + esc(m.label) + '</span></div>';
+  }).join("");
+
+  var legend = s.types.map(function(t) {
+    return '<li><i style="background:' + t.color + '"></i><span>' + esc(t.type) + '</span><b>' + Math.round((t.count/totalTyped)*100) + '%</b></li>';
+  }).join("");
+
+  var top = s.top.map(function(item, i) {
+    var a = ACCENTS[(item.merchant.accent || 0) % ACCENTS.length];
+    var width = Math.max(4, (item.volume/maxVolume)*100);
+    return '<li class="rank-item"><span class="rank-num ' + (i === 0 ? "top" : "") + '">' + (i+1) + '</span>' +
+      '<span class="rank-av" style="background:' + a.grad + ';color:' + a.ink + '">' + esc(item.merchant.name.charAt(0).toUpperCase()) + '</span>' +
+      '<div class="rank-main"><div class="rank-line"><span>' + esc(item.merchant.name) + '</span><b>' + compactCOP(item.volume) + '</b></div>' +
+      '<div class="rank-bar"><i style="width:' + width + '%"></i></div></div></li>';
+  }).join("");
+
+  var recent = s.recent.map(function(op) {
+    return '<li class="recent-item"><span class="typebadge t-' + esc(op.type) + '">' + esc(op.type) + '</span>' +
+      '<span class="recent-mid">' + esc(op.merchant) + '</span>' +
+      '<span class="recent-val"><b>' + esc(formatCOP(op.total)) + '</b><small>' + esc(formatDate(op.date)) + '</small></span></li>';
+  }).join("");
+
+  host.innerHTML = '' +
+    '<div class="stats-top"><p>Periodo analizado</p><div class="ranges">' + ranges + '</div></div>' +
+    '<div class="skpis">' + kpis + '</div>' +
+    '<div class="charts">' +
+      '<div class="chart">' +
+        '<div class="chart-head"><div><p>Actividad de la plataforma</p><small>Operaciones registradas · últimos 6 meses</small></div>' +
+          '<span class="chart-trend">' + icon("arrow-up") + ' ' + esc(num(s.series.reduce(function(sum,m){ return sum + m.count; },0))) + ' ops</span></div>' +
+        '<div class="bars">' + bars + '</div>' +
+        '<div class="chart-foot"><span>Volumen del mes actual</span><b>' + esc(formatCOP(currentMonth.volume)) + '</b></div>' +
+      '</div>' +
+      '<div class="chart">' +
+        '<div class="chart-head"><div><p>Tipos de operación</p><small>Distribución en el periodo</small></div></div>' +
+        '<div class="donut-wrap"><div class="donut">' +
+          '<svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="rgba(255,255,255,.06)" stroke-width="6"></circle>' + donut + '</svg>' +
+          '<div class="donut-center"><div><b>' + esc(new Intl.NumberFormat("es-CO",{notation:"compact"}).format(s.totalOps)) + '</b><span>operaciones</span></div></div>' +
+        '</div><ul class="legend">' + legend + '</ul></div>' +
+        '<div class="volume-box"><span>Volumen periodo</span><b>' + esc(compactCOP(s.volume)) + '</b></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="bottom-grid">' +
+      '<div class="chart"><div class="chart-head"><div><p>Comercios destacados</p><small>Top por volumen facturado</small></div><span style="color:var(--haze)">' + icon("store") + '</span></div>' +
+        '<ul class="rank-list">' + top + '</ul></div>' +
+      '<div class="chart"><div class="chart-head"><div><p>Últimas operaciones</p><small>Actividad reciente de los comercios</small></div><span style="color:var(--haze)">' + icon("activity") + '</span></div>' +
+        '<ul class="recent-list">' + recent + '</ul></div>' +
+    '</div>';
+}
+
+function openStatsModal() {
+  openModal({
+    title: "Estadísticas generales de la plataforma",
+    subtitle: "Actividad real de los comercios · no incluye métricas de este panel administrativo.",
+    icon: "chart", tone: "mint", size: "xl",
+    body: '<div id="statsBody"></div>',
+    footer: '<div class="foot-row split">' +
+      '<p class="stats-foot">' + icon("bank") + '<span>Uso general de la plataforma administrada · ' + merchants.length + ' comercios en total</span></p>' +
+      '<button type="button" class="mbtn mbtn-mint" data-action="close-modal">Cerrar panel</button>' +
+    '</div>'
+  });
+  renderStatsBody();
+}
+
+/* ------------------------------ Acciones ------------------------------ */
+function contactMerchant(id) {
+  var m = getMerchant(id); if (!m) return;
+  var a = document.createElement("a");
+  a.href = waLink(m, template);
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  document.body.appendChild(a); a.click(); a.remove();
+  toast("info", "Abriendo WhatsApp", "Mensaje predeterminado preparado para " + m.name + ".");
+}
+function togglePassword(id) {
+  var input = document.querySelector('[data-pass-input="' + id + '"]'); if (!input) return;
+  var btn = document.querySelector('[data-action="reveal"][data-id="' + id + '"]');
+  var visible = input.type === "text";
+  input.type = visible ? "password" : "text";
+  if (btn) {
+    btn.innerHTML = icon(visible ? "eye" : "eye-off");
+    btn.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
+    btn.setAttribute("title", visible ? "Mostrar contraseña" : "Ocultar contraseña");
+  }
+}
+function updateBilling(input) {
+  var id = input.getAttribute("data-id");
+  var m = getMerchant(id); if (!m) return;
+  var card = input.closest(".card");
+  var patch = {};
+  if (input.hasAttribute("data-billing-start")) {
+    if (!input.value) { input.value = m.inicio_cobro; return; }
+    patch.inicio_cobro = input.value;
+  } else {
+    patch.ciclo_dias = Number(input.value) || 30;
+  }
+  patch.updated_at = new Date().toISOString();
+  merchants = merchants.map(function(item){ return item.id === id ? Object.assign({}, item, patch) : item; });
+  saveMerchants();
+  var updated = getMerchant(id);
+  if (card && updated) {
+    var row = card.querySelector("[data-next-row]");
+    if (row) {
+      var next = computeNext(updated.inicio_cobro, updated.ciclo_dias);
+      row.querySelector(".next-line").innerHTML = '<span class="next-date">' + esc(formatDate(next)) + '</span>' + nextBadge(updated);
+      row.classList.remove("flash");
+      void row.offsetWidth;
+      row.classList.add("flash");
     }
+    var meta = card.querySelector(".meta-row span:last-child");
+    if (meta) meta.textContent = "Actualizado: " + formatDate(updated.updated_at);
+  }
 }
-function mostrarToastExito(mensaje) { mostrarToast(mensaje, false); }
-function mostrarToastError(mensaje) { mostrarToast(mensaje, true); }
-function mostrarToast(mensaje, error) {
-    document.querySelectorAll('.admin-alert-container').forEach(a => a.remove());
-    const t = document.createElement('div');
-    t.className = 'admin-alert-container' + (error ? ' error' : '');
-    t.innerHTML = '<i class="fa-solid ' + (error ? 'fa-circle-xmark' : 'fa-circle-check') + '"></i><p>' + mensaje + '</p>';
-    document.body.appendChild(t);
-    setTimeout(() => { t.style.transition = 'opacity .4s'; t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);
+function refreshPanel() {
+  var btn = $("#refreshBtn");
+  if (!btn || btn.classList.contains("spinning")) return;
+  btn.classList.add("spinning");
+  setTimeout(function() {
+    btn.classList.remove("spinning");
+    lastSync = new Date();
+    renderFooter();
+    toast("success", "Panel actualizado", merchants.length + " comercios · " + num(OPERATIONS.length) + " operaciones sincronizadas.");
+  }, 650);
 }
-function mostrarCargando() {
-    document.getElementById('adminGrid').innerHTML = '<div class="admin-loading"><i class="fa-solid fa-circle-notch"></i><p style="margin-top:10px">Cargando comercios...</p></div>';
-}
-function recargar() { cargar(); }
-document.addEventListener('DOMContentLoaded', cargar);
+
+/* ------------------------------ Eventos ------------------------------ */
+document.addEventListener("click", function(event) {
+  var overlay = event.target.closest("[data-overlay]");
+  if (overlay && event.target === overlay) { closeModal(); return; }
+
+  var filterBtn = event.target.closest("[data-filter]");
+  if (filterBtn) {
+    state.filter = filterBtn.getAttribute("data-filter");
+    $$("#filters .filter").forEach(function(btn){ btn.classList.toggle("active", btn === filterBtn); });
+    renderGrid();
+    return;
+  }
+
+  var el = event.target.closest("[data-action]");
+  if (!el) return;
+  var action = el.getAttribute("data-action");
+  var id = el.getAttribute("data-id");
+
+  switch (action) {
+    case "template": openTemplateModal(); break;
+    case "stats": openStatsModal(); break;
+    case "refresh": refreshPanel(); break;
+    case "contact": contactMerchant(id); break;
+    case "reveal": togglePassword(id); break;
+    case "password": state.passwordTarget = id; openPasswordModal(id); break;
+    case "block": openBlockModal(id); break;
+    case "confirm-block": confirmBlock(id); break;
+    case "reminder": openReminderModal(id); break;
+    case "reminder-ics": reminderICS(id); break;
+    case "reminder-google": reminderGoogle(id); break;
+    case "close-modal": closeModal(); break;
+    case "clear-search":
+      state.query = ""; $("#searchInput").value = ""; $("#clearSearch").hidden = true; renderGrid(); break;
+    case "clear-filters":
+      state.query = ""; state.filter = "todos"; $("#searchInput").value = ""; $("#clearSearch").hidden = true;
+      $$("#filters .filter").forEach(function(btn){ btn.classList.toggle("active", btn.getAttribute("data-filter") === "todos"); });
+      renderGrid(); break;
+    case "dismiss-toast":
+      var t = document.getElementById(el.getAttribute("data-target")); if (t) t.remove(); break;
+    case "toggle-field":
+      var target = document.getElementById(el.getAttribute("data-target")); if (!target) return;
+      var showing = target.type === "text";
+      target.type = showing ? "password" : "text";
+      el.innerHTML = icon(showing ? "eye" : "eye-off");
+      el.setAttribute("aria-label", showing ? "Mostrar contraseña" : "Ocultar contraseña");
+      break;
+    case "generate-password":
+      var generated = generatePassword();
+      var newInput = $("#pwNew"), confirmInput = $("#pwConfirm");
+      if (newInput) { newInput.value = generated; newInput.type = "text"; }
+      if (confirmInput) { confirmInput.value = generated; confirmInput.type = "text"; }
+      $$(".eye-btn").forEach(function(btn){ btn.innerHTML = icon("eye-off"); });
+      updatePwStrength();
+      break;
+    case "insert-token": insertToken(el.getAttribute("data-token")); break;
+    case "reset-template":
+      var area = $("#waTpl"); if (area) { area.value = DEFAULT_TEMPLATE; updateTemplatePreview(); }
+      break;
+    case "save-template": saveTemplateValue(); break;
+    case "stats-range":
+      state.statsRange = Number(el.getAttribute("data-days")) || 90;
+      renderStatsBody();
+      break;
+    default: break;
+  }
+});
+
+document.addEventListener("submit", function(event) {
+  if (event.target.id === "pwForm") { event.preventDefault(); submitPassword(event); }
+});
+
+document.addEventListener("input", function(event) {
+  if (event.target.id === "searchInput") {
+    state.query = event.target.value;
+    $("#clearSearch").hidden = !state.query;
+    renderGrid();
+  }
+  if (event.target.id === "waTpl") updateTemplatePreview();
+  if (event.target.id === "remText") {
+    var count = $("#remCount"); if (count) count.textContent = event.target.value.length + " caracteres";
+  }
+  if (event.target.id === "pwNew" || event.target.id === "pwConfirm") updatePwStrength();
+});
+
+document.addEventListener("change", function(event) {
+  if (event.target.hasAttribute && (event.target.hasAttribute("data-billing-start") || event.target.hasAttribute("data-billing-cycle"))) {
+    updateBilling(event.target);
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && $("#modalRoot").children.length) closeModal();
+});
+
+/* ------------------------------ Inicio ------------------------------ */
+$("#searchInput").addEventListener("search", function(event) {
+  if (!this.value) { state.query = ""; $("#clearSearch").hidden = true; renderGrid(); }
+});
+renderAll();
 </script>
 </body>
 </html>
